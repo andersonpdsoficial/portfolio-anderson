@@ -1,0 +1,23 @@
+node_modules/
+.next/
+out/
+.vercel/
+.env*
+!.env.example
+*.tsbuildinfo
+npm-debug.log*
+.DS_Store
+
+# Temporários do editor e relatórios de build
+*.log
+coverage/
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+*.zip
