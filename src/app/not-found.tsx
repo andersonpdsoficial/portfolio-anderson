@@ -20,10 +20,6 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SearchOffRoundedIcon from '@mui/icons-material/SearchOffRounded';
 import TerminalRoundedIcon from '@mui/icons-material/TerminalRounded';
 
-// ============================================================
-// PÁGINA 404 — MATERIAL UI V5
-// ============================================================
-
 export default function NotFound() {
   const theme = useTheme();
 
@@ -240,12 +236,12 @@ export default function NotFound() {
               variant="overline"
               sx={{
                 color: 'primary.main',
-                fontWeight: 800,
-                letterSpacing: '0.16em',
+                fontWeight: 600,
+                letterSpacing: '0.10em',
 
                 fontSize: {
-                  xs: '0.62rem',
-                  sm: '0.72rem',
+                  xs: '0.50rem',
+                  sm: '0.60rem',
                 },
               }}
             >
@@ -273,9 +269,9 @@ export default function NotFound() {
               aria-hidden="true"
               sx={{
                 fontSize: {
-                  xs: '8rem',
-                  sm: '12rem',
-                  md: '16rem',
+                  xs: '4rem',
+                  sm: '8rem',
+                  md: '12rem',
                 },
 
                 fontWeight: 900,
@@ -313,7 +309,7 @@ export default function NotFound() {
 
                 top: {
                   xs: 0,
-                  sm: 12,
+                  sm: 10,
                 },
 
                 right: {

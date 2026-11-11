@@ -1,8 +1,10 @@
-
 'use client';
+
+import Image from 'next/image';
 
 import {
   Box,
+  Button,
   Chip,
   Container,
   Paper,
@@ -18,9 +20,15 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined';
+import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
+import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
-import { portfolioData } from '@/data/portfolioData';
+import { portfolioData, type FreeCourse } from '@/data/portfolioData';
 import { Reveal } from '@/components/ui/Reveal';
+import { RemoveRedEye } from '@mui/icons-material';
 
 // ============================================================
 // ESTILOS COMPARTILHADOS — MATERIAL UI
@@ -63,11 +71,257 @@ const cardHoverSx = {
 } as const;
 
 // ============================================================
+// CURSOS LIVRES — CARTÕES COM CERTIFICADO
+// ============================================================
+
+function CourseCard({ course }: { course: FreeCourse }) {
+  return (
+    <Paper
+      component="article"
+      elevation={0}
+      sx={(theme) => ({
+        minWidth: 0,
+        p: 1,
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: '15px',
+        bgcolor: 'background.default',
+        backgroundImage: `linear-gradient(120deg, ${alpha(
+          theme.palette.primary.main,
+          0.06,
+        )}, transparent 85%)`,
+        transition: 'border-color 240ms ease, transform 240ms ease',
+        '&:hover': {
+          borderColor: alpha(theme.palette.primary.main, 0.5),
+          transform: 'translateY(-3px)',
+        },
+        '@media (prefers-reduced-motion: reduce)': {
+          transition: 'none',
+          '&:hover': { transform: 'none' },
+        },
+      })}
+    >
+      <Stack direction="row" spacing={1.6} alignItems="flex-start">
+        <Box sx={{ flex: 1, minWidth: 0 }}>
+          <Typography
+            component="h4"
+            sx={{
+              color: 'text.primary',
+              fontSize: '0.91rem',
+              fontWeight: 600,
+              lineHeight: 1.1,
+              overflowWrap: 'anywhere',
+            }}
+          >
+            {course.title}
+          </Typography>
+
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            useFlexGap
+            gap={1.2}
+            sx={{ mt: 1.1 }}
+          >
+            <Stack direction="row" alignItems="center" spacing={0.4}>
+              <CalendarMonthRoundedIcon
+                aria-hidden="true"
+                sx={{ fontSize: 15, color: 'primary.main' }}
+              />
+              <Typography variant="caption" color="text.secondary">
+                {course.date}
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={0.4}>
+              <AccessTimeRoundedIcon
+                aria-hidden="true"
+                sx={{ fontSize: 15, color: 'primary.main' }}
+              />
+              <Typography variant="caption" color="text.secondary">
+                {course.totalHours} h
+              </Typography>
+            </Stack>
+          </Stack>
+
+          <Button
+            component="a"
+            href={course.certificateImage}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="text"
+            size="small"
+            endIcon={<RemoveRedEye sx={{ fontSize: 15 }} />}
+            aria-label={`Abrir certificado de ${course.title} em nova aba`}
+            sx={{
+              mt: 1.25,
+              px: 0,
+              minHeight: 32,
+              textTransform: 'none',
+              fontSize: '0.6rem',
+              fontWeight: 600,
+              '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' },
+              '&:focus-visible': { outline: '2px solid', outlineOffset: 3 },
+            }}
+          >
+            Ver certificado
+          </Button>
+          <Button
+            component="a"
+            href={course.certificateUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="text"
+            size="small"
+            endIcon={<VerifiedIcon sx={{ fontSize: 15 }} />}
+            aria-label={`Abrir certificado de ${course.title} em nova aba`}
+            sx={{
+              mt: 1.25,
+              px: 0,
+              minHeight: 32,
+              textTransform: 'none',
+              fontSize: '0.6rem',
+              fontWeight: 600,
+              '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' },
+              '&:focus-visible': { outline: '2px solid', outlineOffset: 3 },
+            }}
+          >
+            Validação
+          </Button>
+        </Box>
+
+        {/* <Box
+          component="a"
+          href={course.certificateImage}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visualizar imagem do certificado de ${course.title} em nova aba`}
+          sx={(theme) => ({
+            position: 'relative',
+            display: 'block',
+            flexShrink: 0,
+            width: { xs: 86, sm: 106, md: 92, lg: 106 },
+            aspectRatio: '4 / 3',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            bgcolor: theme.palette.mode === 'dark' ? '#19232B' : '#F2F5F7',
+            border: `1px solid ${alpha(theme.palette.primary.main, 0.24)}`,
+            boxShadow: `0 7px 18px ${alpha(theme.palette.common.black, 0.12)}`,
+            '&:hover img': { transform: 'scale(1.045)' },
+            '&:focus-visible': {
+              outline: '2px solid',
+              outlineColor: 'primary.main',
+              outlineOffset: 3,
+            },
+            '& img': {
+              transition: 'transform 250ms ease',
+            },
+            '@media (prefers-reduced-motion: reduce)': {
+              '& img': { transition: 'none' },
+              '&:hover img': { transform: 'none' },
+            },
+          })}
+        >
+           <Image
+            src={course.certificateImage}
+            alt={`Prévia do certificado: ${course.title}`}
+            fill
+            sizes="(max-width: 600px) 86px, 106px"
+            style={{ objectFit: 'contain' }}
+          /> 
+        </Box> */}
+      </Stack>
+    </Paper>
+  );
+}
+
+function FreeCoursesPanel({ courses }: { courses: readonly FreeCourse[] }) {
+  return (
+    <Reveal delay={0.18}>
+      <Paper
+        component="aside"
+        aria-labelledby="free-courses-title"
+        elevation={0}
+        sx={(theme) => ({
+          mt: 2.5,
+          p: { xs: 2.5, sm: 3 },
+          borderRadius: '20px',
+          bgcolor: 'background.paper',
+          border: '1px solid',
+          borderColor: 'divider',
+          backgroundImage: `radial-gradient(ellipse at 100% 0%, ${alpha(
+            theme.palette.info.main,
+            0.1,
+          )}, transparent 65%)`,
+          boxShadow:
+            theme.palette.mode === 'dark'
+              ? '0 14px 36px rgba(0,0,0,0.12)'
+              : '0 14px 36px rgba(20,30,45,0.045)',
+        })}
+      >
+        <Stack direction="row" spacing={1.3} alignItems="center" sx={{ mb: 2.3 }}>
+          <Box
+            sx={(theme) => ({
+              width: 42,
+              height: 42,
+              borderRadius: '12px',
+              flexShrink: 0,
+              display: 'grid',
+              placeItems: 'center',
+              color: 'primary.main',
+              bgcolor: alpha(theme.palette.primary.main, 0.1),
+            })}
+          >
+            <WorkspacePremiumOutlinedIcon />
+          </Box>
+          <Box sx={{ minWidth: 0 }}>
+            <Typography
+              component="h3"
+              id="free-courses-title"
+              sx={{
+                fontSize: '0.88rem',
+                fontWeight: 800,
+                color: 'text.primary',
+                letterSpacing: '0.07em',
+              }}
+            >
+              CURSOS LIVRES
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Cursos e certificados de conclusão
+            </Typography>
+          </Box>
+        </Stack>
+
+        {courses.length > 0 ? (
+          <Stack spacing={1.4}>
+            {courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </Stack>
+        ) : (
+          <Typography
+            variant="body2"
+            sx={{
+              py: 0.5,
+              color: 'text.secondary',
+              fontSize: '0.85rem',
+              lineHeight: 1.7,
+            }}
+          >
+            Certificados em atualização.
+          </Typography>
+        )}
+      </Paper>
+    </Reveal>
+  );
+}
+
+// ============================================================
 // COMPONENTE PRINCIPAL
 // ============================================================
 
 export function ExperienceTimeline() {
-  const { experiences, education } = portfolioData;
+  const { experiences, education, freeCourses } = portfolioData;
 
   return (
     <Box
@@ -137,14 +391,8 @@ export function ExperienceTimeline() {
             sx={{
               minWidth: 0,
 
-              position: {
-                xs: 'relative',
-                md: 'sticky',
-              },
-
-              top: {
-                md: 110,
-              },
+              // Cresce com os cursos; sem sticky para não ocultar certificados.
+              position: 'relative',
             }}
           >
             <Reveal>
@@ -445,6 +693,9 @@ export function ExperienceTimeline() {
                 </Stack>
               </Paper>
             </Reveal>
+
+            {/* CURSOS LIVRES — ABAIXO DA FORMAÇÃO ACADÊMICA */}
+            <FreeCoursesPanel courses={freeCourses} />
           </Box>
 
           {/* ==================================================

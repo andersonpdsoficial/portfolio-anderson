@@ -23,10 +23,6 @@ import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 
 import { portfolioData } from '@/data/portfolioData';
 
-// ============================================================
-// COMPONENTE FOOTER
-// ============================================================
-
 export function Footer() {
   const theme = useTheme();
 
@@ -38,10 +34,6 @@ export function Footer() {
 
   const primaryColor = theme.palette.primary.main;
 
-  // ==========================================================
-  // RETORNAR AO TOPO DA PÁGINA ATUAL
-  // ==========================================================
-
   function scrollToTop(): void {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -52,10 +44,6 @@ export function Footer() {
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
     });
   }
-
-  // ==========================================================
-  // ESTILOS COMPARTILHADOS
-  // ==========================================================
 
   const headingSx = {
     color: 'text.primary',
@@ -102,10 +90,6 @@ export function Footer() {
     },
   } as const;
 
-  // ==========================================================
-  // INTERFACE
-  // ==========================================================
-
   return (
     <Box
       component="footer"
@@ -114,13 +98,10 @@ export function Footer() {
         position: 'relative',
         isolation: 'isolate',
         overflow: 'hidden',
-
         bgcolor: 'background.paper',
         color: 'text.primary',
-
         borderTop: '1px solid',
         borderColor: 'divider',
-
         backgroundImage: `
           radial-gradient(
             ellipse at 5% 10%,
@@ -140,10 +121,6 @@ export function Footer() {
         `,
       }}
     >
-      {/* ================================================
-          LINHA SUPERIOR EM GRADIENTE
-      ================================================ */}
-
       <Box
         aria-hidden="true"
         sx={{
@@ -152,7 +129,6 @@ export function Footer() {
           left: '10%',
           right: '10%',
           height: '1px',
-
           background: `
             linear-gradient(
               90deg,
@@ -162,15 +138,9 @@ export function Footer() {
               transparent
             )
           `,
-
           pointerEvents: 'none',
         }}
       />
-
-      {/* ================================================
-          ILUMINAÇÃO DECORATIVA
-      ================================================ */}
-
       <Box
         aria-hidden="true"
         sx={{
@@ -186,7 +156,7 @@ export function Footer() {
           background: `
             radial-gradient(
               circle,
-              ${alpha(primaryColor, 0.12)},
+              ${alpha(primaryColor, 0.16)},
               transparent 70%
             )
           `,
@@ -436,7 +406,7 @@ export function Footer() {
               variant="body2"
               sx={{
                 color: 'text.secondary',
-                maxWidth: 360,
+                maxWidth: 380,
                 lineHeight: 1.9,
                 fontSize: '0.92rem',
               }}

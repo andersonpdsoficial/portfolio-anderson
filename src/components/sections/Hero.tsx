@@ -1126,7 +1126,7 @@ export function Hero() {
                 justifyContent="space-between"
                 alignItems="center"
                 sx={{
-                  mt: 2,
+                  mt: 1,
                   px: 1,
                 }}
               >
