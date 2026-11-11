@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   Box,
@@ -21,14 +21,12 @@ import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined';
-import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
-import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VerifiedIcon from '@mui/icons-material/Verified';
 
 import { portfolioData, type FreeCourse } from '@/data/portfolioData';
 import { Reveal } from '@/components/ui/Reveal';
-import { RemoveRedEye } from '@mui/icons-material';
+import { CertificateCard } from '@/components/certificates/CertificateCard';
+import { getHomeCertificates } from '@/functions/getHomeCertificates';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 // ============================================================
 // ESTILOS COMPARTILHADOS — MATERIAL UI
@@ -74,167 +72,9 @@ const cardHoverSx = {
 // CURSOS LIVRES — CARTÕES COM CERTIFICADO
 // ============================================================
 
-function CourseCard({ course }: { course: FreeCourse }) {
-  return (
-    <Paper
-      component="article"
-      elevation={0}
-      sx={(theme) => ({
-        minWidth: 0,
-        p: 1,
-        border: '1px solid',
-        borderColor: 'divider',
-        borderRadius: '15px',
-        bgcolor: 'background.default',
-        backgroundImage: `linear-gradient(120deg, ${alpha(
-          theme.palette.primary.main,
-          0.06,
-        )}, transparent 85%)`,
-        transition: 'border-color 240ms ease, transform 240ms ease',
-        '&:hover': {
-          borderColor: alpha(theme.palette.primary.main, 0.5),
-          transform: 'translateY(-3px)',
-        },
-        '@media (prefers-reduced-motion: reduce)': {
-          transition: 'none',
-          '&:hover': { transform: 'none' },
-        },
-      })}
-    >
-      <Stack direction="row" spacing={1.6} alignItems="flex-start">
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography
-            component="h4"
-            sx={{
-              color: 'text.primary',
-              fontSize: '0.91rem',
-              fontWeight: 600,
-              lineHeight: 1.1,
-              overflowWrap: 'anywhere',
-            }}
-          >
-            {course.title}
-          </Typography>
-
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            useFlexGap
-            gap={1.2}
-            sx={{ mt: 1.1 }}
-          >
-            <Stack direction="row" alignItems="center" spacing={0.4}>
-              <CalendarMonthRoundedIcon
-                aria-hidden="true"
-                sx={{ fontSize: 15, color: 'primary.main' }}
-              />
-              <Typography variant="caption" color="text.secondary">
-                {course.date}
-              </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={0.4}>
-              <AccessTimeRoundedIcon
-                aria-hidden="true"
-                sx={{ fontSize: 15, color: 'primary.main' }}
-              />
-              <Typography variant="caption" color="text.secondary">
-                {course.totalHours} h
-              </Typography>
-            </Stack>
-          </Stack>
-
-          <Button
-            component="a"
-            href={course.certificateImage}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="text"
-            size="small"
-            endIcon={<RemoveRedEye sx={{ fontSize: 15 }} />}
-            aria-label={`Abrir certificado de ${course.title} em nova aba`}
-            sx={{
-              mt: 1.25,
-              px: 0,
-              minHeight: 32,
-              textTransform: 'none',
-              fontSize: '0.6rem',
-              fontWeight: 600,
-              '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' },
-              '&:focus-visible': { outline: '2px solid', outlineOffset: 3 },
-            }}
-          >
-            Ver certificado
-          </Button>
-          <Button
-            component="a"
-            href={course.certificateUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="text"
-            size="small"
-            endIcon={<VerifiedIcon sx={{ fontSize: 15 }} />}
-            aria-label={`Abrir certificado de ${course.title} em nova aba`}
-            sx={{
-              mt: 1.25,
-              px: 0,
-              minHeight: 32,
-              textTransform: 'none',
-              fontSize: '0.6rem',
-              fontWeight: 600,
-              '&:hover': { bgcolor: 'transparent', textDecoration: 'underline' },
-              '&:focus-visible': { outline: '2px solid', outlineOffset: 3 },
-            }}
-          >
-            Validação
-          </Button>
-        </Box>
-
-        {/* <Box
-          component="a"
-          href={course.certificateImage}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Visualizar imagem do certificado de ${course.title} em nova aba`}
-          sx={(theme) => ({
-            position: 'relative',
-            display: 'block',
-            flexShrink: 0,
-            width: { xs: 86, sm: 106, md: 92, lg: 106 },
-            aspectRatio: '4 / 3',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            bgcolor: theme.palette.mode === 'dark' ? '#19232B' : '#F2F5F7',
-            border: `1px solid ${alpha(theme.palette.primary.main, 0.24)}`,
-            boxShadow: `0 7px 18px ${alpha(theme.palette.common.black, 0.12)}`,
-            '&:hover img': { transform: 'scale(1.045)' },
-            '&:focus-visible': {
-              outline: '2px solid',
-              outlineColor: 'primary.main',
-              outlineOffset: 3,
-            },
-            '& img': {
-              transition: 'transform 250ms ease',
-            },
-            '@media (prefers-reduced-motion: reduce)': {
-              '& img': { transition: 'none' },
-              '&:hover img': { transform: 'none' },
-            },
-          })}
-        >
-           <Image
-            src={course.certificateImage}
-            alt={`Prévia do certificado: ${course.title}`}
-            fill
-            sizes="(max-width: 600px) 86px, 106px"
-            style={{ objectFit: 'contain' }}
-          /> 
-        </Box> */}
-      </Stack>
-    </Paper>
-  );
-}
-
 function FreeCoursesPanel({ courses }: { courses: readonly FreeCourse[] }) {
+  const homeCourses = getHomeCertificates(courses);
+
   return (
     <Reveal delay={0.18}>
       <Paper
@@ -293,10 +133,44 @@ function FreeCoursesPanel({ courses }: { courses: readonly FreeCourse[] }) {
         </Stack>
 
         {courses.length > 0 ? (
-          <Stack spacing={1.4}>
-            {courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+          <Stack spacing={1.15}>
+            {homeCourses.map((course, index) => (
+              <CertificateCard
+                key={`${course.id}-${index}`}
+                course={course}
+                variant="compact"
+              />
             ))}
+
+            <Box sx={{ pt: 1.2 }}>
+              <Button
+                component={Link}
+                href="/certificados"
+                variant="outlined"
+                color="primary"
+                fullWidth
+                endIcon={<ArrowForwardRoundedIcon />}
+                sx={{
+                  minHeight: 44,
+                  borderRadius: '12px',
+                  fontWeight: 750,
+                  textTransform: 'none',
+                  '&:focus-visible': {
+                    outline: '2px solid',
+                    outlineOffset: 3,
+                  },
+                }}
+              >
+                Listar todos
+              </Button>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: 'block', mt: 1, textAlign: 'center' }}
+              >
+                Exibindo {homeCourses.length} de {courses.length} certificados
+              </Typography>
+            </Box>
           </Stack>
         ) : (
           <Typography
@@ -489,7 +363,6 @@ export function ExperienceTimeline() {
                     color: 'text.secondary',
                     lineHeight: 1.9,
                     maxWidth: 470,
-
                     fontSize: {
                       xs: '1rem',
                       md: '1.06rem',

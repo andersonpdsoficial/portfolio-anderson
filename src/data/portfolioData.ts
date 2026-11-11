@@ -5,7 +5,7 @@ import type {
 
 import { contactData } from '@/data/contactData';
 
-/** Curso livre com imagem pública do certificado em public/certificados/. */
+/** Curso livre com imagem pública do certificado em public/courses/. */
 export interface FreeCourse {
   id: string;
   title: string;
@@ -13,7 +13,7 @@ export interface FreeCourse {
   date: string;
   /** Carga horária total, em horas. */
   totalHours: number;
-  /** Caminho público da imagem: /certificados/nome-do-arquivo.webp */
+  /** Caminho público da imagem: /courses/nome-do-arquivo.webp */
   certificateImage: string;
 
   /** URL do certificado */
@@ -761,7 +761,7 @@ export const portfolioData: PortfolioWithCourses = {
 
   freeCourses: [
     // Preencha com os dados reais e coloque as imagens em
-    // public/certificados/. Não inclua certificados particulares
+    // public/courses/. Não inclua certificados particulares
     // ou com informações pessoais que não queira publicar.
     //
     // Exemplo de estrutura (remova as barras // ao cadastrar):
