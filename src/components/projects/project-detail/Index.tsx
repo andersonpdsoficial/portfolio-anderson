@@ -17,7 +17,7 @@ import { projectDetailStyles } from '../../../styles/projects/project-detailStyl
 import { ProjectDetailContentProps } from '@/types/projectsTypes/projectDetail.types';
 import { getProjectDetailData } from '@/utils/projectDetail.utils';
 import { ProjectDetailCover } from './ProjectDetailCover';
-import { ProjectGallery } from '../project-gallery';
+import { ProjectGallery } from '../project-gallery/Index';
 
 export function ProjectDetailContent({
   project,

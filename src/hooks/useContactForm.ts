@@ -11,12 +11,9 @@ import {
   type ContactField,
   type ContactFieldErrors,
 } from '@/functions/contactValidation';
-import {
-  ContactSubmissionError,
-  submitContactForm,
-} from '@/functions/submitContactForm';
 import { CONTACT_ERRORS, EMPTY_CONTACT_FORM } from '@/functions/contactFunctions/contact.constants';
 import { ContactDraft, ContactFeedback, ContactFormController } from '@/types/sections-types/about/contact.types';
+import { ContactSubmissionError, submitContactForm } from '@/services/contact';
 
 export function useContactForm(): ContactFormController {
   const [form, setForm] = useState<ContactDraft>(

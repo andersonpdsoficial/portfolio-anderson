@@ -8,7 +8,7 @@ import { ProjectFeatures } from './ProjectFeatures';
 import { ProjectDisclosure } from './ProjectDisclosure';
 import { projectDetailStyles } from '../../../styles/projects/project-detailStyles/ProjectDetail.styles';
 import { ProjectDetailBodyProps } from '@/types/projectsTypes/projectDetail.types';
-import { ProjectDetailSection } from './projectDetailSection';
+import { ProjectDetailSection } from './ProjectDetailSection';
 
 export function ProjectDetailBody({
   project,

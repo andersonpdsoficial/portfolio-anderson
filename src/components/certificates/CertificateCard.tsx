@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 import {
   Box,
-  Button,
   Chip,
   Paper,
   Stack,
