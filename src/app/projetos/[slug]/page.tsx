@@ -1,102 +1,53 @@
-import { use } from 'react';
-
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-
-import { portfolioData } from '@/data/portfolioData';
-import { ProjectDetailContent } from '@/components/projects/ProjectDetailContent';
-import type { Project } from '@/types/portfolio';
-
-type CasePageProps = Readonly<{
-  params: Promise<{ slug: string }>;
-}>;
+import {
+  findProjectBySlug,
+  getProjectStaticParams,
+  getRelatedProjects,
+  getNotFoundProjectMetadata,
+  getProjectMetadata,
+} from '@/lib/projects';
+import type {
+  ProjectPageProps,
+  ProjectRouteParams,
+} from '@/lib/projects';
+import { ProjectDetailContent } from '@/components/projects/project-detail/Index';
 
 export const dynamicParams = false;
 
-export function generateStaticParams(): Array<{ slug: string }> {
-  return portfolioData.projects.map(({ slug }) => ({ slug }));
+export function generateStaticParams():
+  ProjectRouteParams[] {
+  return getProjectStaticParams();
 }
 
-function findProject(slug: string): Project | undefined {
-  return portfolioData.projects.find(
-    (item) => item.slug === slug,
-  );
-}
-
-export function generateMetadata({
+export async function generateMetadata({
   params,
-}: CasePageProps): Promise<Metadata> {
-  return params.then(({ slug }) => {
-    const project = findProject(slug);
-    if (!project) {
-    return {
-      title: 'Projeto não encontrado',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+}: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const project = findProjectBySlug(slug);
+
+  if (!project) {
+    return getNotFoundProjectMetadata();
   }
 
-  return {
-    title: project.title,
-    description: project.summary,
-
-    alternates: {
-      canonical: `/projetos/${project.slug}`,
-    },
-
-    openGraph: {
-      type: 'article',
-      title: project.title,
-      description: project.summary,
-      url: `/projetos/${project.slug}`,
-
-      images: [
-        {
-          url: project.thumbnail,
-          alt: project.thumbnailAlt,
-        },
-      ],
-    },
-
-    twitter: {
-      card: 'summary_large_image',
-      title: project.title,
-      description: project.summary,
-      images: [project.thumbnail],
-    },
-  };
-  });
+  return getProjectMetadata(project);
 }
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
-}: CasePageProps) {
-  const { slug } = use(params);
-  const project = findProject(slug);
+}: ProjectPageProps) {
+  const { slug } = await params;
+
+  const project = findProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
-  const relatedProjects = portfolioData.projects
-    .filter((item) => item.slug !== project.slug)
-    .map(
-      ({
-        slug: relatedSlug,
-        shortTitle,
-        category,
-        year,
-        accent,
-      }) => ({
-        slug: relatedSlug,
-        shortTitle,
-        category,
-        year,
-        accent,
-      }),
-    );
+  const relatedProjects = getRelatedProjects(
+    project.slug,
+  );
 
   return (
     <ProjectDetailContent
