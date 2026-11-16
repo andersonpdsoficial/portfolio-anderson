@@ -24,6 +24,14 @@ type PortfolioWithCourses = PortfolioData & {
   freeCourses: readonly FreeCourse[];
 };
 
+export interface CursoEdu{
+  id: string;
+  title: string;
+  totalHours: string,
+  certificateImage:string,
+  certificateUrl: string
+  date_inicio_fim:string,
+}
 
 /**
  * Portfólio profissional — Anderson Pereira da Silva
@@ -745,13 +753,20 @@ export const portfolioData: PortfolioWithCourses = {
       title: 'Engenharia de Software',
       type: 'Graduação',
       status: 'Concluída',
+      date_inicio_fim:'02/02/2021 - 15/12/2025',
+      totalHours:'4000',
+      certificateImage:'/courses/25-graducao.png',
+      certificateUrl:''
     },
 
     {
-      title:
-        'Inteligência Artificial e Machine Learning',
+      title:'Inteligência Artificial e Machine Learning',
       type: 'Pós-graduação lato sensu',
       status: 'Concluída',
+      date_inicio_fim:'17/12/2025 - 30/10/2026',
+      totalHours:'400',
+      certificateImage:'/courses/24-POS.png',
+      certificateUrl:'validador.vitru.com.br'
     },
   ],
 
@@ -760,11 +775,7 @@ export const portfolioData: PortfolioWithCourses = {
   // ==========================================================
 
   freeCourses: [
-    // Preencha com os dados reais e coloque as imagens em
-    // public/courses/. Não inclua certificados particulares
-    // ou com informações pessoais que não queira publicar.
-    //
-    // Exemplo de estrutura (remova as barras // ao cadastrar):
+
     {
       id: '01-T-I-E-C-E-P-D',
       title: 'TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO EM PLATAFORMAS DIGITAIS',
@@ -790,52 +801,173 @@ export const portfolioData: PortfolioWithCourses = {
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '10-A-R-N-A.png',
+      title: 'ARQUITETURA DE REDES NEURAIS ARTIFICIAIS',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/10-A-R-N-A.png',
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+    },
+
+    {
+      id: '04-INDI.png',
+      title: 'INTRODUÇÃO A NEGÓCIOS DITAIS E INOVAÇÃO',
+      date: '11/09/2026',
+      totalHours: 40,
+      certificateImage: '/courses/04-I-N-D-I.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '05-I-A-S-I.png',
+      title: 'INTELIGêNCIA ARTIFICIAL E SISTEMAS INTELIGENTES',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/05-I-A-S-I.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '06-F-T-M-L.png',
+      title: 'FUNDAMENTOS E TÉCNICAS DE MACHINE LEARNING',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/06-F-T-M-L.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '07-F-A-P-I.png',
+      title: 'FERRAMENTAS E APLICAÇÕES PRÁTICAS DE INTELIGÊNCIA ARTIFICIAL',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/07-F-A-P-I.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '08-B-D-A-T-D.png',
+      title: 'BIG DATA ANALYTIC E A TOMADA DE DECISÕES',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/08-B-D-A-T-D.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
     },
     {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
+      id: '03-P.png',
+      title: 'POTIFÓLIO',
       date: '11/09/2026',
       totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
+      certificateImage: '/courses/03-P.png',
       certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+    },
+    {
+      id: '09-A-V-I-C.png',
+      title: 'ASSISTENTES VIRTUAIS E CHATBOTS',
+      date: '11/09/2026',
+      totalHours: 40,
+      certificateImage: '/courses/09-A-V-I-C.png',
+      certificateUrl: 'http://www.unicesumar.AGEN.br/documentos'
+    },
+     {
+      id: '11-alura-postgres.png',
+      title: 'POSTGRESQL: COMANDOS DML E DDL',
+      date: '12/05/2026',
+      totalHours: 8,
+      certificateImage: '/courses/11-alura-postgres.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714'
+    },
+     {
+      id: '12-alura-PostgreSQL-views.png',
+      title: 'POSTGRESQL: VIEWS, SUB-CONSULTAS E FUNÇÕES',
+      date: '12/05/2026',
+      totalHours: 8,
+      certificateImage: '/courses/12-alura-PostgreSQL-views.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714'
+    },
+    {
+      id: '13-alura-postgrees.png',
+      title: 'POSTGRESQL',
+      date: '17/05/2026',
+      totalHours: 8,
+      certificateImage: '/courses/13-alura-postgrees.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a8c4d221-a8c7-48f0-971e-6ebb6e85e911'
+    },
+    {
+      id: '14-alura-Python-criar.png',
+      title: 'PYTHON: CRIE A SUA PRIMEIRA APLICAÇÃO',
+      date: '04/08/2024',
+      totalHours: 8,
+      certificateImage: '/courses/14-alura-Python-criar.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/7fca7700-573c-49dd-95bc-149f2d5a4f87'
+    },
+    {
+      id: '15-React-implementando-arquitetura-event-driven-Socket-io.png',
+      title: 'REACT: IMPLEMENTANDO ARQUITETURA EVENT-DRIVEN COM SOCKET.IO',
+      date: '20/04/2026',
+      totalHours: 8,
+      certificateImage: '/courses/15-React-implementando-arquitetura-event-driven-Socket-io.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/27ac4d7d-88b8-49e3-a708-5b2a2ff09c6c'
+    },
+    {
+      id: '16-SOLID-aplicado-ao-React.png',
+      title: 'SOLID APLICANDO AO REACT: MELHORANDO A MODULARIDADE E FLEXIBILIDADE DO CÓDIGO',
+      date: '09/04/2025',
+      totalHours: 8,
+      certificateImage: '/courses/16-SOLID-aplicado-ao-React.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a3054c47-1342-4710-9beb-5d04f29c5ade'
+    },
+    {
+      id: '22-REACT-NEST.png',
+      title: 'REACT E NEST: IMPLEMENTANDO UM BACKEND FOR FRONT-END',
+      date: '15/04/2025',
+      totalHours: 8,
+      certificateImage: '/courses/22-REACT-NEST.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/87fb978f-7326-4b5b-9d36-0d031bbb4c75'
+    },
+    {
+      id: '23-REACT-ARQUITETURA.png',
+      title: 'REACT: INTEGRAÇÃO COM SUPABASE E CONCEITOS DE ARQUITETURA LIMPA NA PRÁTICA',
+      date: '15/04/2025',
+      totalHours: 8,
+      certificateImage: '/courses/23-REACT-ARQUITETURA.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/249d0965-5e87-4113-8c79-2fa1a30b155b'
+    },
+    {
+      id: '17-API-com-Django3-Validacoes-buscas-filtros-e-deploy.png',
+      title: 'API COM DJANGO 3: VALIDAÇÕES, BUSCAS, FILTROS E DEPLOY',
+      date: '22/07/2024',
+      totalHours: 8,
+      certificateImage: '/courses/17-API-com-Django3-Validacoes-buscas-filtros-e-deploy.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/28d48af2-5f59-4a1d-995e-eac098a8532f'
+    },
+    {
+      id: '18-API-com-Django3-Django-Rest-Framework.png',
+      title: 'API COM DJANGO 3: DJANGO REACT FRAMEWORK',
+      date: '18/07/2024',
+      totalHours: 8,
+      certificateImage: '/courses/18-API-com-Django3-Django-Rest-Framework.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/f72e48d3-1896-473c-b4e9-e8e81462bc3e'
+    },
+    {
+      id: '19-Comecando-em-Programacao-carreira-e-primeiros-passos.png',
+      title: 'COMEÇANDO EM PROGRAMAÇÃO: CARREIRA E PRIMEIROS PASSOS',
+      date: '28/01/2025',
+      totalHours: 8,
+      certificateImage: '/courses/19-Comecando-em-Programacao-carreira-e-primeiros-passos.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a9c7d2a3-0b3f-4a69-8ca8-ccb9d235a3e5'
+    },
+    {
+      id: '20-React-comece-seu-projeto-full-stack.png',
+      title: 'REACT: COMECE SEU PROJETO FULL STACK',
+      date: '03/07/2024',
+      totalHours: 12,
+      certificateImage: '/courses/20-React-comece-seu-projeto-full-stack.png',
+      certificateUrl: 'https://cursos.alura.com.br/certificate/f14a55de-903e-4e75-91be-735217540aaa'
+    },
+    {
+      id: '21-conclusoes.png',
+      title: 'CONCLUSÕES DE TRILHAS E CURSOS',
+      date: '01/07/2024 - 12/05/2026',
+      totalHours: 91,
+      certificateImage: '/courses/21-conclusoes.png',
+      certificateUrl: 'https://cursos.alura.com.br/user/andersonengsoft/fullCertificate/908ac35092f96a2944b45e1561d2f27d'
     },
   ],
 

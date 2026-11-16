@@ -62,6 +62,10 @@ export interface Education {
   type: string;
   status: string;
   institution?: string;
+  totalHours: string,
+  certificateImage:string,
+  certificateUrl: string
+  date_inicio_fim:string,
 }
 
 export interface SkillGroup {

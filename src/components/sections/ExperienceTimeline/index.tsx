@@ -6,10 +6,10 @@ import {
 } from '@mui/material';
 import { portfolioData } from '@/data/portfolioData';
 import { Reveal } from '@/components/ui/Reveal';
-import { ExperienceIntro } from './ExperienceIntro';
-import { ExperienceEducation } from './ExperienceEducation';
-import { FreeCoursesPanel } from './FreeCoursesPanel';
-import { ExperienceList } from './ExperienceList';
+import { ExperienceIntro } from './ExperienceTrag/ExperienceIntro';
+import { ExperienceEducation } from './EducationCourses/ExperienceEducation';
+import { FreeCoursesPanel } from './CoursosFree/FreeCoursesPanel';
+import { ExperienceList } from './ExperienceTrag/ExperienceList';
 import { experienceStyles } from '@/styles/sections-styles/experience.styles';
 
 export function ExperienceTimeline() {
