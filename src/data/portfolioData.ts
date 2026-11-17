@@ -24,13 +24,13 @@ type PortfolioWithCourses = PortfolioData & {
   freeCourses: readonly FreeCourse[];
 };
 
-export interface CursoEdu{
+export interface CursoEdu {
   id: string;
   title: string;
   totalHours: string,
-  certificateImage:string,
+  certificateImage: string,
   certificateUrl: string
-  date_inicio_fim:string,
+  date_inicio_fim: string,
 }
 
 /**
@@ -203,11 +203,9 @@ export const portfolioData: PortfolioWithCourses = {
 
     {
       slug: 'vyrtra',
-
       eyebrow: '01 / SaaS · Arquitetura de Software',
-
       title:
-        'VYRTRA — Ecossistema de Gestão de Eventos e Reservas',
+        'VYRTRA — Ecossistema de Gestão de Eventos e Reservas, Plataforma SaaS multi-tenant',
       shortTitle: 'VYRTRA',
       summary:
         'Plataforma SaaS multi-tenant para gerenciamento de eventos, ingressos, reservas, produtos, pedidos, pagamentos e automações.',
@@ -219,7 +217,48 @@ export const portfolioData: PortfolioWithCourses = {
       thumbnail: '/projects/vyrtra.png',
       thumbnailAlt:
         'Representação visual do ecossistema VYRTRA, com módulos de gestão, eventos, ingressos e operações integradas.',
-      gallery: [{ src: '/projects/vyrtra.png', alt: 'Representação visual do ecossistema VYRTRA, com módulos de gestão, eventos, ingressos e operações integradas.', caption: 'Visão geral do projeto' }],
+      gallery: [
+        {
+          src: '/projects/vyrtra/vyrtra.png',
+          alt: 'Representação visual do ecossistema VYRTRA, com módulos de gestão, eventos, ingressos e operações integradas.',
+          caption: 'Painel principal de gerenciamento'
+        },
+        {
+          src: '/projects/vyrtra/login-vyrtra.png',
+          alt: 'Visão da tela de Login do VYRTRA',
+          caption: 'Visão da tela login vyrtra',
+        },
+        {
+          src: '/projects/vyrtra/adm-muilt-tenant-vyrtra.png',
+          alt: 'Visão da tela de escolha Multi Tenant do VYRTRA. Podendo escolher qual empresa acessar.',
+          caption: 'Visão da tela de escolha Multi Tenant do VYRTRA',
+        } ,
+        {
+          src: '/projects/vyrtra/page-ingressos-vyrtra-home.png',
+          alt: 'Visão da tela de ingressos do VYRTRA.',
+          caption: 'Visão da tela de ingressos do VYRTRA.',
+        } ,
+        {
+          src: '/projects/vyrtra/page-ingressos-vyrtra.png',
+          alt: 'Visão da tela de meus ingressos do VYRTRA, após login do cliente.',
+          caption: 'Visão da tela de ingressos do VYRTRA.',
+        } ,
+        {
+          src: '/projects/vyrtra/page-ingressos-vyrtra-2.png',
+          alt: 'Visão da tela vendas de ingressos do VYRTRA.',
+          caption: 'Visão da tela de vendas de ingressos do VYRTRA.',
+        } ,
+        {
+          src: '/projects/vyrtra/page-validator-vyrtra.png',
+          alt: 'Visão da tela de login do Validador de ingressos Portaria do VYRTRA.',
+          caption: 'Visão da tela do validador de  ingressos do VYRTRA.',
+        } ,
+        {
+          src: '/projects/vyrtra/assencibilidade-vyrtra.png',
+          alt: 'Visão da tela de acessibilidade disponivel VYRTRA.',
+          caption: 'Visão da tela de acessibilidade disponivel VYRTRA.',
+        }
+      ],
       // links: { website: 'https://...', repository: 'https://github.com/...' },
       stack: [
         'Python',
@@ -234,7 +273,6 @@ export const portfolioData: PortfolioWithCourses = {
         'Redis',
         'Celery',
       ],
-
       featured: true,
       challenge:
         'Projetar uma plataforma capaz de atender diferentes organizações e operações comerciais, garantindo isolamento de dados, segurança, controle de permissões e integração consistente entre módulos.',
@@ -276,10 +314,9 @@ export const portfolioData: PortfolioWithCourses = {
 
     {
       slug: 'ouvidoria-digital',
-      eyebrow: '02 / Governo Digital · Experiência do Usuário',
+      eyebrow: '02 / Ouvidoria Digital · Experiência do Usuário',
       title:
         'Ouvidoria Digital — Defensoria Pública de Rondônia',
-
       shortTitle: 'Ouvidoria Digital',
       summary:
         'Solução digital para manifestações, atendimento ao cidadão, pesquisas de satisfação e organização de informações institucionais.',
@@ -291,8 +328,39 @@ export const portfolioData: PortfolioWithCourses = {
       thumbnail: '/projects/ouvidoria.png',
       thumbnailAlt:
         'Interface ilustrativa da Ouvidoria Digital da Defensoria Pública de Rondônia, com formulários e informações institucionais.',
-      gallery: [{ src: '/projects/ouvidoria.png', alt: 'Interface ilustrativa da Ouvidoria Digital da Defensoria Pública de Rondônia, com formulários e informações institucionais.', caption: 'Visão geral do projeto' }],
-      links: { website: 'https://www.defensoria.ro.def.br/ouvidoriageral', repository: 'https://github.com/...' },
+      gallery: [
+        { 
+          src: '/projects/ouvidoria/ouvidoria.png', 
+          alt: 'Interface ilustrativa da Ouvidoria Digital da Defensoria Pública de Rondônia, com formulários e informações institucionais.', 
+          caption: 'Visão geral do projeto' 
+        } ,
+        {
+          src: '/projects/ouvidoria/ouvidoria.png',
+          alt: 'Visão da tela Inicial da Ouvidoria.',
+          caption: 'Visão da tela Inicial da Ouvidoria',
+        },
+        {
+          src: '/projects/ouvidoria/ouvidoria-not.png',
+          alt: 'Visão da tela Inicial de noticias da Ouvidoria.',
+          caption: 'Visão da tela Inicial de noticias da Ouvidoria',
+        },
+        {
+          src: '/projects/ouvidoria/ouvidoria-not-2.png',
+          alt: 'Visão da tela de listagem de noticias da Ouvidoria.',
+          caption: 'Visão da telalistagem de noticias da Ouvidoria',
+        },
+        {
+          src: '/projects/ouvidoria/ouvidoria-for.png',
+          alt: 'Visão da tela de formulários da Ouvidoria.',
+          caption: 'Visão da tela de formulários da Ouvidoria',
+        },
+        {
+          src: '/projects/ouvidoria/ouvidoria-est.png',
+          alt: 'Visão da tela Inicial estrutura equipe da Ouvidoria.',
+          caption: 'Visão da tela Inicial estrututa equipe da Ouvidoria',
+        }
+        ],
+      links: { website: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
       stack: [
         'Next.js',
         'React',
@@ -302,26 +370,17 @@ export const portfolioData: PortfolioWithCourses = {
         'Zod',
         'REST API',
       ],
-
       featured: true,
-
       challenge:
         'Desenvolver interfaces institucionais claras, acessíveis e organizadas, facilitando o registro de manifestações e a coleta de informações de diferentes perfis de usuários.',
-
       solution:
         'Organização de componentes reutilizáveis, desenvolvimento de formulários com validação tipada, integração com serviços e implementação de estados de carregamento, sucesso e erro.',
-
       engineeringDecisions: [
         'Separação entre componentes de apresentação, lógica de formulários e integração com serviços.',
-
         'Centralização de esquemas de validação para manter consistência dos dados.',
-
         'Utilização de TypeScript para melhorar a segurança de tipos e a manutenção.',
-
         'Implementação de feedback visual para operações e respostas do sistema.',
-
         'Organização de interfaces responsivas para diferentes dispositivos.',
-
         'Estruturação de conteúdo institucional e seções de notícias.',
       ],
 
@@ -346,31 +405,20 @@ export const portfolioData: PortfolioWithCourses = {
 
     {
       slug: 'intranet-institucional',
-
       eyebrow: '03 / Sistemas Corporativos · Intranet',
-
       title:
         'Sistema de Intranet — Gestão e Comunicação Interna',
-
       shortTitle: 'Sistema Intranet',
-
       summary:
         'Ambiente digital corporativo para centralização de ferramentas, documentos, informações e comunicação interna.',
-
       description:
         'Projeto de intranet corporativa destinado à organização de recursos institucionais, documentos, informações e ferramentas de trabalho. A solução busca oferecer aos colaboradores um ambiente centralizado, com navegação estruturada e acesso aos recursos conforme as necessidades da organização.',
-
       category: 'Sistemas de gestão',
-
       status: 'Estudo técnico',
-
       year: '2026',
-
       thumbnail: '/projects/intranet.png',
-
       thumbnailAlt:
         'Representação de uma intranet corporativa com painel de ferramentas, documentos e comunicação interna.',
-
       gallery: [{ src: '/projects/intranet.png', alt: 'Representação de uma intranet corporativa com painel de ferramentas, documentos e comunicação interna.', caption: 'Visão geral do projeto' }],
       links: { website: 'https://www.defensoria.ro.def.br/intranet', repository: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
       stack: [
@@ -381,29 +429,19 @@ export const portfolioData: PortfolioWithCourses = {
         'JavaScript',
         'Modelagem de dados',
       ],
-
       featured: true,
-
       challenge:
         'Centralizar informações, documentos e ferramentas corporativas, reduzindo a dispersão de recursos e facilitando o acesso dos colaboradores aos serviços internos.',
-
       solution:
         'Planejamento de uma arquitetura de intranet com organização de conteúdo, estruturação de recursos institucionais, integração de dados e interfaces de navegação voltadas ao ambiente corporativo.',
-
       engineeringDecisions: [
         'Estruturação de conteúdo por categorias, áreas e funcionalidades.',
-
         'Separação entre apresentação de informações e gerenciamento de conteúdo.',
-
         'Utilização de WordPress como alternativa para administração de conteúdos institucionais.',
-
         'Avaliação da integração GraphQL para disponibilização estruturada de informações.',
-
         'Organização de componentes reutilizáveis para navegação e visualização de recursos.',
-
         'Planejamento de mecanismos de controle de acesso para conteúdos internos.',
       ],
-
       features: [
         'Portal corporativo',
         'Comunicação interna',
@@ -423,31 +461,20 @@ export const portfolioData: PortfolioWithCourses = {
 
     {
       slug: 'lu-estilo-api',
-
       eyebrow: '04 / Backend · Gestão Comercial',
-
       title:
         'Lu Estilo — API de Gestão de Pedidos',
-
       shortTitle: 'Sistema Lu Estilo',
-
       summary:
         'API RESTful desenvolvida com FastAPI para gerenciamento de clientes, produtos, estoque, pedidos e integração com WhatsApp.',
-
       description:
         'Desenvolvimento de uma API backend para o sistema de gestão comercial Lu Estilo. A solução reúne funcionalidades de autenticação, autorização, cadastro de clientes, gerenciamento de produtos, controle de estoque, processamento de pedidos e integração com canais de comunicação.',
-
       category: 'Sistemas de gestão',
-
       status: 'Em desenvolvimento',
-
       year: '2026',
-
       thumbnail: '/projects/luestilo.png',
-
       thumbnailAlt:
         'Representação do sistema Lu Estilo, com gestão de pedidos, produtos, clientes e integração comercial.',
-
       gallery: [{ src: '/projects/luestilo.png', alt: 'Representação do sistema Lu Estilo, com gestão de pedidos, produtos, clientes e integração comercial.', caption: 'Visão geral do projeto' }],
       links: { website: 'https://www.defensoria.ro.def.br/ouvidoriageral', repository: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
       stack: [
@@ -702,7 +729,7 @@ export const portfolioData: PortfolioWithCourses = {
       role: 'Atendimento e Suporte técnico',
       organization: 'Grupo Provider / Energisa',
       period: 'Jun 2023 — Mai 2024',
-      location: 'Ariqumes/RO · Brasil',
+      location: 'Ariquemes/RO · Brasil',
       description:
         'Atuação em atendimento e suporte, com foco em comunicação, investigação de problemas, orientação de usuários, resolução de demandas operacionais e treinamento de equipes em outras cidades de Rondônia no uso dos sistemas internos.',
       highlights: [
@@ -753,20 +780,20 @@ export const portfolioData: PortfolioWithCourses = {
       title: 'Engenharia de Software',
       type: 'Graduação',
       status: 'Concluída',
-      date_inicio_fim:'02/02/2021 - 15/12/2025',
-      totalHours:'4000',
-      certificateImage:'/courses/25-graducao.png',
-      certificateUrl:''
+      date_inicio_fim: '02/02/2021 - 15/12/2025',
+      totalHours: '4000',
+      certificateImage: '/courses/25-graducao.png',
+      certificateUrl: ''
     },
 
     {
-      title:'Inteligência Artificial e Machine Learning',
+      title: 'Inteligência Artificial e Machine Learning',
       type: 'Pós-graduação lato sensu',
       status: 'Concluída',
-      date_inicio_fim:'17/12/2025 - 30/10/2026',
-      totalHours:'400',
-      certificateImage:'/courses/24-POS.png',
-      certificateUrl:'validador.vitru.com.br'
+      date_inicio_fim: '17/12/2025 - 30/10/2026',
+      totalHours: '400',
+      certificateImage: '/courses/24-POS.png',
+      certificateUrl: 'validador.vitru.com.br'
     },
   ],
 
@@ -775,7 +802,22 @@ export const portfolioData: PortfolioWithCourses = {
   // ==========================================================
 
   freeCourses: [
-
+{
+      id: '00-fm2s',
+      title: 'INTELIGÊNCIA ARTIFICIAL GENERATIVA',
+      date: '04/05/2026',
+      totalHours: 16,
+      certificateImage: '/courses/fm2s-inteligencia.png',
+      certificateUrl: 'https://ead.fm2s.com.br/verify/175fd51da258f096ebdb053e4ebc1e713515f9ca'
+    },
+    {
+      id: '000-fm2s',
+      title: 'MÉTODOLOGIA ÁGEIS NA PRÁTICA',
+      date: '10/04/2026',
+      totalHours: 12,
+      certificateImage: '/courses/fm2s-inteligencia.png',
+      certificateUrl: 'https://ead.fm2s.com.br/verify/4d03c558e7ab24fd99fae7a8579931891fbe9179'
+    },
     {
       id: '01-T-I-E-C-E-P-D',
       title: 'TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO EM PLATAFORMAS DIGITAIS',
@@ -865,7 +907,7 @@ export const portfolioData: PortfolioWithCourses = {
       certificateImage: '/courses/09-A-V-I-C.png',
       certificateUrl: 'http://www.unicesumar.AGEN.br/documentos'
     },
-     {
+    {
       id: '11-alura-postgres.png',
       title: 'POSTGRESQL: COMANDOS DML E DDL',
       date: '12/05/2026',
@@ -873,7 +915,7 @@ export const portfolioData: PortfolioWithCourses = {
       certificateImage: '/courses/11-alura-postgres.png',
       certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714'
     },
-     {
+    {
       id: '12-alura-PostgreSQL-views.png',
       title: 'POSTGRESQL: VIEWS, SUB-CONSULTAS E FUNÇÕES',
       date: '12/05/2026',
@@ -1018,7 +1060,6 @@ export const portfolioData: PortfolioWithCourses = {
         'Node.js',
         'PHP',
         'PostgreSQL',
-        'SQLAlchemy',
         'Alembic',
         'REST API',
         'GraphQL',
