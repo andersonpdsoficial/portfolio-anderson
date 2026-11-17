@@ -704,6 +704,69 @@ export const portfolioData: PortfolioWithCourses = {
       accent: 'yellow',
     },
 
+    
+    // --------------------------------------------------------
+    // 03 — Gran Zen
+    // --------------------------------------------------------
+
+    {
+      slug: 'granzen',
+      eyebrow: '03 / Site simulação de organização de finanças',
+      title:
+        'Gestor de finanças pessoais',
+      shortTitle: 'Gestor de finanças pessoais',
+      summary:
+        'Ambiente de simulação de gestão da vida financeira pessoal. ',
+      description:
+        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase',
+      category: 'Sistemas de gestão',
+      status: 'Em desenvolvimento',
+      year: '2025',
+      thumbnail: '/projects/granzen.png',
+      thumbnailAlt:
+        'Representação de uma tela de login do sistema de organização financeira [!Supabase poderá está invelido no momento que for verificar o app]',
+      gallery: [
+        {
+         src: '/projects/granzen.png', 
+         alt: 'Representação de uma tela inicial do sistema de organização financeira' 
+        }, {
+         src: '/projects/granzen1.png', 
+         alt: 'Representação adicionando  itens no sistema de organização financeira' 
+        },
+      ],
+      links: { website: 'https://grana-zen-main.vercel.app/index.html', repository: 'https://grana-zen-main.vercel.app/index.html' },
+      stack: [
+        'Supabase',
+        'Next.js',
+        'React',
+        'JavaScript',
+        'Modelagem de dados',
+      ],
+      featured: true,
+      challenge:
+        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+      solution:
+        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+      engineeringDecisions: [
+        'Estruturação de conteúdo por categorias, áreas e funcionalidades.',
+        'Separação entre apresentação de informações e gerenciamento de conteúdo.',
+        'Utilização de WordPress como alternativa para administração de conteúdos institucionais.',
+        'Avaliação da integração GraphQL para disponibilização estruturada de informações.',
+        'Organização de componentes reutilizáveis para navegação e visualização de recursos.',
+        'Planejamento de mecanismos de controle de acesso para conteúdos internos.',
+      ],
+      features: [
+        'Portal Login',
+        'Graficos atualizados',
+        'Organização financeira',
+        'Organização de ferramentas',
+        'Gerenciamento de conteúdo',
+        'Integração com Supabase',
+      ],
+
+      accent: 'lime',
+    },
+
   ],
 
   // ==========================================================
