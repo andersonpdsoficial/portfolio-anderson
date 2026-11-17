@@ -3,7 +3,6 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import type { EducationItemProps } from '@/types/sections-types/about/experience.types';
 import { experienceStyles } from '@/styles/sections-styles/experience.styles';
