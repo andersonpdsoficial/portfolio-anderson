@@ -130,7 +130,7 @@ export const portfolioData: PortfolioWithCourses = {
       category: 'SaaS e plataformas',
       status: 'Em desenvolvimento',
       year: '2026',
-      thumbnail: '/projects/vyrtra.png',
+      thumbnail: '/projects/vyrtra/vyrtra.png',
       thumbnailAlt:
         'Visão geral da plataforma VYRTRA para gestão de eventos e operações comerciais.',
       gallery: [
