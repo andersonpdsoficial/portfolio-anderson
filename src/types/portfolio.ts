@@ -1,5 +1,5 @@
 export type ProjectStatus = 'Em desenvolvimento' | 'Estudo técnico' | 'Concluído';
-export type ProjectCategory = 'Plataformas' | 'Experiência digital' | 'Sistemas de gestão';
+export type ProjectCategory = 'Arquitetura de informação' | 'Serviços digitais públicos' | 'Backend e APIs' | 'Sistemas institucionais' | 'SaaS e plataformas' | 'Comunicação em tempo real' | 'Projetos de estudo';
 
 export interface ProfessionalLink {
   label: string;

@@ -5,893 +5,671 @@ import type {
 
 import { contactData } from '@/data/contactData';
 
-/** Curso livre com imagem pública do certificado em public/courses/. */
+/** Curso livre com certificado apresentado no portfólio. */
 export interface FreeCourse {
   id: string;
   title: string;
-  /** Data exibida ao visitante, no formato brasileiro (DD/MM/AAAA). */
+  /** Data exibida no formato brasileiro. */
   date: string;
-  /** Carga horária total, em horas. */
   totalHours: number;
-  /** Caminho público da imagem: /courses/nome-do-arquivo.webp */
+  /** Caminho público da imagem, relativo a public/. */
   certificateImage: string;
-
-  /** URL do certificado */
+  /** URL de verificação; manter vazia quando não houver link confiável. */
   certificateUrl: string;
+}
+
+/** Mantido por compatibilidade com eventuais importações existentes. */
+export interface CursoEdu {
+  id: string;
+  title: string;
+  totalHours: string;
+  certificateImage: string;
+  certificateUrl: string;
+  date_inicio_fim: string;
 }
 
 type PortfolioWithCourses = PortfolioData & {
   freeCourses: readonly FreeCourse[];
 };
 
-export interface CursoEdu {
-  id: string;
-  title: string;
-  totalHours: string,
-  certificateImage: string,
-  certificateUrl: string
-  date_inicio_fim: string,
-}
-
 /**
- * Portfólio profissional — Anderson Pereira da Silva
+ * Fonte única de conteúdo público do portfólio.
  *
- * Arquivo: src/data/portfolioData.ts
- *
- * Centraliza:
- * - Identidade profissional
- * - Navegação
- * - Competências
- * - Projetos
- * - Experiências profissionais
- * - Formação acadêmica
- * - Cursos livres e certificados
- * - Habilidades técnicas
- *
- * Os dados são separados dos componentes de interface.
- * Não incluir links, resultados ou métricas não verificados.
- *
- * As imagens dos projetos devem existir em:
- * public/projects/
+ * Diretrizes editoriais:
+ * - Diferenciar projetos concluídos, estudos técnicos e trabalhos em andamento.
+ * - Não divulgar indicadores, clientes ou resultados não comprovados.
+ * - Não cadastrar links de repositório sem URL real do código-fonte.
+ * - Preservar slugs e caminhos de imagens existentes para não quebrar rotas.
+ * - As features de projetos em andamento descrevem escopo, não um aceite de produção.
  */
-
-// ============================================================
-// 1. CONFIGURAÇÕES DE CONTATO
-// ============================================================
 
 const email =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() ||
   contactData.recipientEmail;
 
-const github =
-  process.env.NEXT_PUBLIC_GITHUB_URL?.trim() || '';
-
-const linkedin =
-  process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim() || '';
+const github = process.env.NEXT_PUBLIC_GITHUB_URL?.trim() || '';
+const linkedin = process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim() || '';
 
 const links: ProfessionalLink[] = [
   ...(github
-    ? [
-      {
-        label: 'GitHub',
-        href: github,
-        type: 'github' as const,
-      },
-    ]
+    ? [{ label: 'GitHub', href: github, type: 'github' as const }]
     : []),
-
   ...(linkedin
-    ? [
-      {
-        label: 'LinkedIn',
-        href: linkedin,
-        type: 'linkedin' as const,
-      },
-    ]
+    ? [{ label: 'LinkedIn', href: linkedin, type: 'linkedin' as const }]
     : []),
-
   ...(email
-    ? [
-      {
-        label: 'E-mail',
-        href: `mailto:${email}`,
-        type: 'email' as const,
-      },
-    ]
+    ? [{ label: 'E-mail', href: `mailto:${email}`, type: 'email' as const }]
     : []),
 ];
 
-// ============================================================
-// 2. DADOS PRINCIPAIS DO PORTFÓLIO
-// ============================================================
-
 export const portfolioData: PortfolioWithCourses = {
-  // ==========================================================
-  // IDENTIDADE PROFISSIONAL
-  // ==========================================================
-
-
   identity: {
     name: 'Anderson Pereira da Silva',
     shortName: 'Anderson Pereira',
     monogram: 'AP',
     role: 'Engenheiro de Software Full Stack',
     location: 'Porto Velho, Rondônia · Brasil',
-    headline:
-      'Engenharia sólida. Experiências que fazem sentido.',
+    headline: 'Do problema à solução: software com arquitetura, propósito e qualidade.',
     intro:
-      'Desenvolvo soluções web completas, conectando interfaces modernas, APIs bem estruturadas e arquiteturas de software seguras, organizadas e preparadas para evoluir.',
+      'Atuo no desenvolvimento de aplicações web e APIs, conectando requisitos de negócio, modelagem de dados, segurança e experiência do usuário. Trabalho com Python, Django, Next.js, React e TypeScript, com atenção à manutenção e à evolução dos sistemas.',
     about: [
-      'Sou graduado em Engenharia de Software, com pós-graduação em Inteligência Artificial e Machine Learning. Desenvolvo soluções web completas, do planejamento à implementação de interfaces, APIs e bancos de dados, com foco em qualidade, segurança e organização.',
-      'No frontend, priorizo interfaces modernas, responsivas e acessíveis, com componentes reutilizáveis e código bem estruturado. No backend, trabalho com APIs, arquitetura modular, regras de negócio, modelagem de dados, autenticação e testes, buscando soluções escaláveis e de fácil manutenção.',
+      'Sou graduado em Engenharia de Software e pós-graduado em Inteligência Artificial e Machine Learning. Minha experiência combina desenvolvimento de soluções digitais institucionais, integração de sistemas e projetos próprios que exploram diferentes desafios de arquitetura e produto.',
+      'No backend, concentro esforços na organização de domínios, contratos de API, persistência, autenticação e autorização. No frontend, desenvolvo interfaces responsivas e acessíveis, com componentes reutilizáveis, tipagem consistente e estados de interação claros.',
+      'Valorizo decisões técnicas justificadas, rastreabilidade das mudanças e comunicação objetiva. Busco evoluir como engenheiro de software em equipes que priorizam revisão de código, testes, colaboração e entrega de valor real.',
     ].join('\n\n'),
-
     focus: [
-      'Engenharia de Software',
       'Desenvolvimento Full Stack',
-      'Arquitetura de Sistemas',
-      'Inteligência Artificial & Automação',
+      'APIs e Arquitetura de Software',
+      'Qualidade e Segurança de Aplicações',
+      'Inteligência Artificial e Automação',
     ],
-
     ...(email ? { email } : {}),
-
     links,
   },
 
-  // ==========================================================
-  // NAVEGAÇÃO
-  // ==========================================================
-
   navigation: [
-    {
-      label: 'Sobre',
-      href: '/#sobre',
-    },
-    {
-      label: 'Projetos',
-      href: '/#projetos',
-    },
-    {
-      label: 'Experiência',
-      href: '/#experiencia',
-    },
-    {
-      label: 'Stack',
-      href: '/#stack',
-    },
-    {
-      label: 'Contato',
-      href: '/#contato',
-    },
+    { label: 'Sobre', href: '/#sobre' },
+    { label: 'Projetos', href: '/#projetos' },
+    { label: 'Experiência', href: '/#experiencia' },
+    { label: 'Stack', href: '/#stack' },
+    { label: 'Contato', href: '/#contato' },
   ],
-
-  // ==========================================================
-  // COMPETÊNCIAS PROFISSIONAIS
-  // ==========================================================
 
   capabilities: [
     {
       index: '01',
-      title: 'Da arquitetura à implementação',
+      title: 'Engenharia orientada ao problema',
       description:
-        'Análise de requisitos, modelagem de soluções, desenvolvimento frontend e backend e integração entre diferentes tecnologias.',
+        'Traduzo necessidades em fluxos, modelos de domínio e interfaces, buscando equilibrar experiência do usuário, regras de negócio e viabilidade técnica.',
     },
-
     {
       index: '02',
-      title: 'Backend robusto e seguro',
+      title: 'Backend, integrações e segurança',
       description:
-        'Desenvolvimento de APIs, modelagem de dados, autenticação, autorização, regras de negócio e arquiteturas modulares.',
+        'Estruturo APIs e integrações considerando limites de responsabilidade, consistência dos dados, autenticação, autorização e tratamento explícito de erros.',
     },
-
     {
       index: '03',
-      title: 'Qualidade e evolução contínua',
+      title: 'Código preparado para evoluir',
       description:
-        'Organização de código, testes automatizados, integração contínua, automação de processos e manutenção evolutiva.',
+        'Priorizo tipagem, componentização, testes, versionamento e documentação de decisões para reduzir acoplamento e tornar mudanças mais previsíveis.',
     },
   ],
 
-  // ==========================================================
-  // PROJETOS
-  // ==========================================================
-
   projects: [
-    // --------------------------------------------------------
-    // 01 — VYRTRA
-    // --------------------------------------------------------
-
+    // 01 — VYRTRA: produto SaaS multi-tenant em evolução.
     {
       slug: 'vyrtra',
-      eyebrow: '01 / SaaS · Arquitetura de Software',
-      title:
-        'VYRTRA — Ecossistema de Gestão de Eventos e Reservas, Plataforma SaaS multi-tenant',
+      eyebrow: '01 / SaaS B2B · Arquitetura multi-tenant',
+      title: 'VYRTRA — Plataforma SaaS para eventos, reservas e operações comerciais',
       shortTitle: 'VYRTRA',
       summary:
-        'Plataforma SaaS multi-tenant para gerenciamento de eventos, ingressos, reservas, produtos, pedidos, pagamentos e automações.',
+        'Ecossistema multi-tenant em desenvolvimento, estruturado em monólito modular Django para integrar eventos, ingressos, reservas, pedidos e operações de diferentes organizações.',
       description:
-        'Desenvolvimento de um ecossistema empresarial baseado em uma arquitetura de monólito modular com Django. A plataforma foi projetada para atender múltiplas organizações, integrando gerenciamento de eventos, venda de ingressos, reservas, checkout, controle de produtos, autenticação, autorização, auditoria e canais digitais.',
-      category: 'Plataformas',
+        'O VYRTRA reúne desafios de arquitetura SaaS, controle de acesso e coordenação de fluxos comerciais em um único ecossistema. O backend adota domínios separados em um monólito modular Django, com PostgreSQL, tarefas assíncronas e políticas de acesso contextualizadas por organização. O escopo evolui para pedidos mistos, produtos físicos, operação de portaria e rotinas financeiras; essas frentes não devem ser interpretadas como funcionalidades integralmente concluídas.',
+      category: 'SaaS e plataformas',
       status: 'Em desenvolvimento',
       year: '2026',
       thumbnail: '/projects/vyrtra.png',
       thumbnailAlt:
-        'Representação visual do ecossistema VYRTRA, com módulos de gestão, eventos, ingressos e operações integradas.',
+        'Visão geral da plataforma VYRTRA para gestão de eventos e operações comerciais.',
       gallery: [
         {
           src: '/projects/vyrtra/vyrtra.png',
-          alt: 'Representação visual do ecossistema VYRTRA, com módulos de gestão, eventos, ingressos e operações integradas.',
-          caption: 'Painel principal de gerenciamento'
+          alt: 'Painel principal do ecossistema VYRTRA.',
+          caption: 'Visão geral do painel administrativo',
         },
         {
           src: '/projects/vyrtra/login-vyrtra.png',
-          alt: 'Visão da tela de Login do VYRTRA',
-          caption: 'Visão da tela login vyrtra',
+          alt: 'Interface de autenticação da plataforma VYRTRA.',
+          caption: 'Autenticação e acesso à plataforma',
         },
         {
           src: '/projects/vyrtra/adm-muilt-tenant-vyrtra.png',
-          alt: 'Visão da tela de escolha Multi Tenant do VYRTRA. Podendo escolher qual empresa acessar.',
-          caption: 'Visão da tela de escolha Multi Tenant do VYRTRA',
-        } ,
+          alt: 'Tela de seleção de organização no ambiente multi-tenant.',
+          caption: 'Seleção do contexto organizacional',
+        },
         {
           src: '/projects/vyrtra/page-ingressos-vyrtra-home.png',
-          alt: 'Visão da tela de ingressos do VYRTRA.',
-          caption: 'Visão da tela de ingressos do VYRTRA.',
-        } ,
+          alt: 'Página de descoberta de eventos e ingressos.',
+          caption: 'Vitrine de eventos e ingressos',
+        },
         {
           src: '/projects/vyrtra/page-ingressos-vyrtra.png',
-          alt: 'Visão da tela de meus ingressos do VYRTRA, após login do cliente.',
-          caption: 'Visão da tela de ingressos do VYRTRA.',
-        } ,
+          alt: 'Área do comprador para visualizar ingressos vinculados à conta.',
+          caption: 'Área do comprador e seus ingressos',
+        },
         {
           src: '/projects/vyrtra/page-ingressos-vyrtra-2.png',
-          alt: 'Visão da tela vendas de ingressos do VYRTRA.',
-          caption: 'Visão da tela de vendas de ingressos do VYRTRA.',
-        } ,
+          alt: 'Interface do fluxo de seleção e venda de ingressos.',
+          caption: 'Experiência de compra de ingressos',
+        },
         {
           src: '/projects/vyrtra/page-validator-vyrtra.png',
-          alt: 'Visão da tela de login do Validador de ingressos Portaria do VYRTRA.',
-          caption: 'Visão da tela do validador de  ingressos do VYRTRA.',
-        } ,
+          alt: 'Tela de acesso ao módulo de validação de ingressos na portaria.',
+          caption: 'Acesso à operação de portaria',
+        },
         {
           src: '/projects/vyrtra/assencibilidade-vyrtra.png',
-          alt: 'Visão da tela de acessibilidade disponivel VYRTRA.',
-          caption: 'Visão da tela de acessibilidade disponivel VYRTRA.',
-        }
+          alt: 'Recursos de acessibilidade apresentados na interface VYRTRA.',
+          caption: 'Recursos de acessibilidade',
+        },
       ],
-      // links: { website: 'https://...', repository: 'https://github.com/...' },
       stack: [
-        'Python',
-        'Django',
-        'Django REST Framework',
-        'PostgreSQL',
-        'Next.js',
-        'React',
-        'TypeScript',
-        'Material UI',
-        'Docker',
-        'Redis',
-        'Celery',
+        'Python', 'Django', 'Django REST Framework', 'PostgreSQL',
+        'Next.js', 'React', 'TypeScript', 'Material UI',
+        'Docker', 'Redis', 'Celery',
       ],
       featured: true,
       challenge:
-        'Projetar uma plataforma capaz de atender diferentes organizações e operações comerciais, garantindo isolamento de dados, segurança, controle de permissões e integração consistente entre módulos.',
+        'Permitir que organizações distintas operem no mesmo produto sem misturar dados ou permissões, preservando regras consistentes entre catálogo, pedido, pagamento e validação de ingressos.',
       solution:
-        'Estruturação do backend como monólito modular, com separação de responsabilidades por domínio, gerenciamento multi-tenant, autenticação centralizada, autorização híbrida e integração entre os módulos de eventos, ingressos, pedidos, pagamentos e automações.',
+        'Estruturar a aplicação por domínios de negócio, explicitando o contexto da organização e separando decisões de autorização, processamento assíncrono, regras transacionais e apresentação. A evolução do checkout e dos módulos financeiros é tratada como parte do roadmap do produto.',
       engineeringDecisions: [
-        'Adoção de arquitetura de monólito modular com Django e organização por domínios de negócio.',
-        'Implementação de isolamento multi-tenant com validações de contexto organizacional.',
-        'Combinação de RBAC, ABAC e feature flags para controle de permissões e funcionalidades.',
-        'Utilização de PostgreSQL para persistência de dados relacionais.',
-        'Utilização de Redis e Celery para cache, filas e processamento assíncrono.',
-        'Integração entre eventos, ingressos, produtos físicos, pedidos e pagamentos.',
-        'Separação entre regras de negócio, serviços, APIs e interfaces de usuário.',
-        'Implementação de mecanismos de auditoria, autenticação e validação de operações sensíveis.',
-        'Orquestração de serviços e dependências utilizando Docker.',
+        'Monólito modular Django para manter coesão transacional sem antecipar a complexidade operacional de microsserviços.',
+        'Contexto multi-tenant aplicado às consultas e operações, reduzindo o risco de acesso entre organizações.',
+        'RBAC, ABAC e feature flags para distinguir papéis, condições de acesso e funcionalidades contratadas.',
+        'PostgreSQL como base relacional para cadastros, vínculos e operações de negócio.',
+        'Redis e Celery para atividades assíncronas e processamento desacoplado do ciclo HTTP.',
+        'Separação entre APIs, serviços de aplicação, regras de domínio e interface Next.js.',
+        'Auditoria e tratamento de operações sensíveis como requisitos explícitos de arquitetura.',
+        'Docker para padronização dos serviços e do ambiente de desenvolvimento.',
       ],
-
       features: [
-        'Arquitetura multi-tenant',
-        'Gestão de organizações',
-        'Eventos e ingressos',
-        'Reservas de serviços',
-        'Checkout unificado',
-        'Produtos físicos e kits',
-        'Gestão de pedidos',
-        'Integração de pagamentos',
-        'Autenticação e MFA',
-        'RBAC e ABAC',
-        'Auditoria de operações',
-        'Automações e integrações',
+        'Gestão de organizações e contexto multi-tenant',
+        'Autenticação e autorização contextual',
+        'Catálogo de eventos e ingressos',
+        'Área de ingressos do comprador',
+        'Fluxos de validação na portaria',
+        'Produtos, kits e checkout misto (em evolução)',
+        'Reservas e pedidos integrados (em evolução)',
+        'Operação financeira e conciliação (escopo de evolução)',
       ],
-
       accent: 'lime',
     },
 
-    // --------------------------------------------------------
-    // 02 — OUVIDORIA DIGITAL
-    // --------------------------------------------------------
-
+    // 02 — OUVIDORIA DIGITAL: interface institucional.
     {
       slug: 'ouvidoria-digital',
-      eyebrow: '02 / Ouvidoria Digital · Experiência do Usuário',
-      title:
-        'Ouvidoria Digital — Defensoria Pública de Rondônia',
+      eyebrow: '02 / Produto público · Experiência digital',
+      title: 'Ouvidoria Digital — Defensoria Pública do Estado de Rondônia',
       shortTitle: 'Ouvidoria Digital',
       summary:
-        'Solução digital para manifestações, atendimento ao cidadão, pesquisas de satisfação e organização de informações institucionais.',
+        'Interface institucional voltada à manifestação do cidadão, ao acesso a informações e à coleta estruturada de solicitações e feedback.',
       description:
-        'Desenvolvimento de interfaces e fluxos digitais voltados ao atendimento institucional da Defensoria Pública do Estado de Rondônia. O projeto contempla formulários estruturados, validação de informações, integração com serviços e mecanismos de feedback para melhorar a experiência dos usuários.',
-      category: 'Experiência digital',
+        'Projeto de experiência digital para o contexto de atendimento público. A solução organiza conteúdo institucional, formulários e notícias em jornadas compreensíveis, com atenção à acessibilidade, responsividade e clareza das mensagens. O trabalho contempla componentes reutilizáveis, validação de campos e integração com serviços necessários aos fluxos de atendimento.',
+      category: 'Serviços digitais públicos',
       status: 'Concluído',
       year: '2025–2026',
       thumbnail: '/projects/ouvidoria.png',
       thumbnailAlt:
-        'Interface ilustrativa da Ouvidoria Digital da Defensoria Pública de Rondônia, com formulários e informações institucionais.',
+        'Interface da Ouvidoria Digital com navegação e serviços ao cidadão.',
       gallery: [
-        { 
-          src: '/projects/ouvidoria/ouvidoria.png', 
-          alt: 'Interface ilustrativa da Ouvidoria Digital da Defensoria Pública de Rondônia, com formulários e informações institucionais.', 
-          caption: 'Visão geral do projeto' 
-        } ,
         {
           src: '/projects/ouvidoria/ouvidoria.png',
-          alt: 'Visão da tela Inicial da Ouvidoria.',
-          caption: 'Visão da tela Inicial da Ouvidoria',
+          alt: 'Página inicial da Ouvidoria Digital da Defensoria Pública de Rondônia.',
+          caption: 'Página inicial e navegação institucional',
         },
         {
           src: '/projects/ouvidoria/ouvidoria-not.png',
-          alt: 'Visão da tela Inicial de noticias da Ouvidoria.',
-          caption: 'Visão da tela Inicial de noticias da Ouvidoria',
+          alt: 'Seção de notícias e comunicados da Ouvidoria Digital.',
+          caption: 'Destaque de notícias institucionais',
         },
         {
           src: '/projects/ouvidoria/ouvidoria-not-2.png',
-          alt: 'Visão da tela de listagem de noticias da Ouvidoria.',
-          caption: 'Visão da telalistagem de noticias da Ouvidoria',
+          alt: 'Lista de notícias e publicações da Ouvidoria Digital.',
+          caption: 'Listagem de publicações',
         },
         {
           src: '/projects/ouvidoria/ouvidoria-for.png',
-          alt: 'Visão da tela de formulários da Ouvidoria.',
-          caption: 'Visão da tela de formulários da Ouvidoria',
+          alt: 'Formulários digitais para interação com a Ouvidoria.',
+          caption: 'Formulários e entrada de solicitações',
         },
         {
           src: '/projects/ouvidoria/ouvidoria-est.png',
-          alt: 'Visão da tela Inicial estrutura equipe da Ouvidoria.',
-          caption: 'Visão da tela Inicial estrututa equipe da Ouvidoria',
-        }
-        ],
-      links: { website: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
+          alt: 'Página institucional com informações sobre a estrutura da equipe.',
+          caption: 'Estrutura e informações da equipe',
+        },
+      ],
+      links: {
+        website: 'https://www.defensoria.ro.def.br/ouvidoriageral',
+      },
       stack: [
-        'Next.js',
-        'React',
-        'TypeScript',
-        'Material UI',
-        'WordPress',
-        'Zod',
-        'REST API',
+        'Next.js', 'React', 'TypeScript', 'Material UI',
+        'WordPress', 'Zod', 'REST API',
       ],
       featured: true,
       challenge:
-        'Desenvolver interfaces institucionais claras, acessíveis e organizadas, facilitando o registro de manifestações e a coleta de informações de diferentes perfis de usuários.',
+        'Apresentar serviços institucionais e canais de manifestação de forma intuitiva, sem exigir do cidadão conhecimento prévio sobre a estrutura administrativa.',
       solution:
-        'Organização de componentes reutilizáveis, desenvolvimento de formulários com validação tipada, integração com serviços e implementação de estados de carregamento, sucesso e erro.',
+        'Organizar jornadas em páginas e componentes reutilizáveis, com formulários validados, estados claros de interação e conteúdo hierarquizado para facilitar localização e compreensão.',
       engineeringDecisions: [
-        'Separação entre componentes de apresentação, lógica de formulários e integração com serviços.',
-        'Centralização de esquemas de validação para manter consistência dos dados.',
-        'Utilização de TypeScript para melhorar a segurança de tipos e a manutenção.',
-        'Implementação de feedback visual para operações e respostas do sistema.',
-        'Organização de interfaces responsivas para diferentes dispositivos.',
-        'Estruturação de conteúdo institucional e seções de notícias.',
+        'Separação de componentes de interface, lógica de formulários e comunicação com serviços.',
+        'Validação tipada para reduzir dados inconsistentes enviados pelos formulários.',
+        'Estados explícitos de carregamento, sucesso e erro para orientar a interação.',
+        'Estruturação de notícias e informações institucionais para leitura e navegação consistentes.',
+        'Layouts responsivos e atenção à semântica e acessibilidade dos controles.',
+        'Tipagem TypeScript para apoiar manutenção e evolução do frontend.',
       ],
-
       features: [
-        'Ouvidoria digital',
-        'Manifestação do cidadão',
+        'Informações da Ouvidoria',
+        'Canal de manifestação do cidadão',
+        'Formulários com validação',
         'Pesquisas de satisfação',
-        'Formulários inteligentes',
-        'Validação de dados',
-        'Componentes reutilizáveis',
-        'Seção de notícias',
-        'Integração com APIs',
-        'Interfaces responsivas',
+        'Notícias e comunicados',
+        'Informações sobre a equipe',
+        'Navegação responsiva e acessível',
       ],
-
       accent: 'blue',
     },
 
-    // --------------------------------------------------------
-    // 03 — SISTEMA INTRANET
-    // --------------------------------------------------------
-
+    // 03 — INTRANET: estudo de arquitetura, não sistema entregue.
     {
       slug: 'intranet-institucional',
-      eyebrow: '03 / Sistemas Corporativos · Intranet',
-      title:
-        'Sistema de Intranet — Gestão e Comunicação Interna',
-      shortTitle: 'Sistema Intranet',
+      eyebrow: '03 / Sistemas internos · Arquitetura de informação',
+      title: 'Intranet Institucional — Organização de conhecimento e serviços internos',
+      shortTitle: 'Intranet Institucional',
       summary:
-        'Ambiente digital corporativo para centralização de ferramentas, documentos, informações e comunicação interna.',
+        'Estudo técnico de portal corporativo para consolidar documentos, comunicados e ferramentas de trabalho em uma navegação orientada ao colaborador.',
       description:
-        'Projeto de intranet corporativa destinado à organização de recursos institucionais, documentos, informações e ferramentas de trabalho. A solução busca oferecer aos colaboradores um ambiente centralizado, com navegação estruturada e acesso aos recursos conforme as necessidades da organização.',
-      category: 'Sistemas de gestão',
+        'Estudo de organização de uma intranet institucional, com foco em arquitetura de informação, gestão de conteúdo e acesso a recursos internos. A proposta considera categorias por área, navegação consistente e possíveis integrações entre um CMS e interfaces web. As alternativas tecnológicas descritas representam decisões em avaliação, não comprovação de implantação em produção.',
+      category: 'Arquitetura de informação',
       status: 'Estudo técnico',
       year: '2026',
       thumbnail: '/projects/intranet.png',
       thumbnailAlt:
-        'Representação de uma intranet corporativa com painel de ferramentas, documentos e comunicação interna.',
-      gallery: [{ src: '/projects/intranet.png', alt: 'Representação de uma intranet corporativa com painel de ferramentas, documentos e comunicação interna.', caption: 'Visão geral do projeto' }],
-      links: { website: 'https://www.defensoria.ro.def.br/intranet', repository: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
-      stack: [
-        'WordPress',
-        'PHP',
-        'GraphQL',
-        'Next.js',
-        'JavaScript',
-        'Modelagem de dados',
+        'Estudo visual de portal interno com atalhos, documentos e comunicados.',
+      gallery: [
+        {
+          src: '/projects/intranet.png',
+          alt: 'Proposta de painel de intranet para recursos corporativos.',
+          caption: 'Visão conceitual do portal interno',
+        },
       ],
-      featured: true,
+      links: {
+        website: 'https://www.defensoria.ro.def.br/intranet',
+      },
+      stack: [
+        'WordPress', 'PHP', 'GraphQL', 'Next.js',
+        'JavaScript', 'Modelagem de dados',
+      ],
+      featured: false,
       challenge:
-        'Centralizar informações, documentos e ferramentas corporativas, reduzindo a dispersão de recursos e facilitando o acesso dos colaboradores aos serviços internos.',
+        'Reduzir a dispersão de documentos e ferramentas institucionais, criando uma estrutura que permita encontrar recursos por atividade e contexto de uso.',
       solution:
-        'Planejamento de uma arquitetura de intranet com organização de conteúdo, estruturação de recursos institucionais, integração de dados e interfaces de navegação voltadas ao ambiente corporativo.',
+        'Propor uma arquitetura de conteúdo com áreas, categorias e pontos de entrada consistentes, prevendo integração com mecanismos de publicação e observando as restrições de acesso de conteúdos internos.',
       engineeringDecisions: [
-        'Estruturação de conteúdo por categorias, áreas e funcionalidades.',
-        'Separação entre apresentação de informações e gerenciamento de conteúdo.',
-        'Utilização de WordPress como alternativa para administração de conteúdos institucionais.',
-        'Avaliação da integração GraphQL para disponibilização estruturada de informações.',
-        'Organização de componentes reutilizáveis para navegação e visualização de recursos.',
-        'Planejamento de mecanismos de controle de acesso para conteúdos internos.',
+        'Organização do conteúdo a partir das tarefas e áreas dos usuários internos.',
+        'Separação conceitual entre gestão de conteúdo e camada de apresentação.',
+        'Avaliação do WordPress como CMS para publicações e páginas institucionais.',
+        'Avaliação de GraphQL como alternativa de consulta estruturada aos conteúdos.',
+        'Modelagem de componentes de navegação que possam ser reutilizados.',
+        'Consideração de políticas de acesso antes da exposição de recursos internos.',
       ],
       features: [
-        'Portal corporativo',
-        'Comunicação interna',
-        'Centralização de documentos',
-        'Organização de ferramentas',
-        'Gerenciamento de conteúdo',
-        'Integração GraphQL',
-        'Navegação institucional',
+        'Arquitetura de informação por categorias',
+        'Acesso centralizado a documentos',
+        'Diretório de ferramentas e serviços',
+        'Comunicados internos',
+        'Gestão de conteúdo (proposta)',
+        'Integrações de dados (em avaliação)',
       ],
-
       accent: 'violet',
     },
 
-    // --------------------------------------------------------
-    // 04 — LU ESTILO API
-    // --------------------------------------------------------
-
+    // 04 — LU ESTILO: API de negócio, sem URL de repositório confirmada.
     {
       slug: 'lu-estilo-api',
-      eyebrow: '04 / Backend · Gestão Comercial',
-      title:
-        'Lu Estilo — API de Gestão de Pedidos',
-      shortTitle: 'Sistema Lu Estilo',
+      eyebrow: '04 / Backend · API e regras de negócio',
+      title: 'Lu Estilo — API para catálogo, estoque e ciclo de pedidos',
+      shortTitle: 'Lu Estilo API',
       summary:
-        'API RESTful desenvolvida com FastAPI para gerenciamento de clientes, produtos, estoque, pedidos e integração com WhatsApp.',
+        'API REST em desenvolvimento com FastAPI para conectar cadastro de clientes, produtos, estoque e pedidos sob regras de autenticação e autorização.',
       description:
-        'Desenvolvimento de uma API backend para o sistema de gestão comercial Lu Estilo. A solução reúne funcionalidades de autenticação, autorização, cadastro de clientes, gerenciamento de produtos, controle de estoque, processamento de pedidos e integração com canais de comunicação.',
-      category: 'Sistemas de gestão',
+        'Projeto backend para centralizar operações de uma loja em contratos de API e entidades de domínio. A estrutura utiliza FastAPI, SQLAlchemy e Alembic, com autenticação JWT e regras de acesso por perfil. O escopo abrange cadastro de clientes, catálogo, movimentação de estoque, fluxo de pedidos e comunicação por WhatsApp, ainda em evolução.',
+      category: 'Backend e APIs',
       status: 'Em desenvolvimento',
       year: '2026',
       thumbnail: '/projects/luestilo.png',
       thumbnailAlt:
-        'Representação do sistema Lu Estilo, com gestão de pedidos, produtos, clientes e integração comercial.',
-      gallery: [{ src: '/projects/luestilo.png', alt: 'Representação do sistema Lu Estilo, com gestão de pedidos, produtos, clientes e integração comercial.', caption: 'Visão geral do projeto' }],
-      links: { website: 'https://www.defensoria.ro.def.br/ouvidoriageral', repository: 'https://www.defensoria.ro.def.br/ouvidoriageral' },
-      stack: [
-        'Python',
-        'FastAPI',
-        'SQLAlchemy',
-        'Alembic',
-        'Docker',
-        'Pytest',
-        'Sentry',
-        'JWT',
-        'REST API',
+        'Representação da API comercial Lu Estilo e de seus módulos de gestão.',
+      gallery: [
+        {
+          src: '/projects/luestilo.png',
+          alt: 'Visão ilustrativa das operações comerciais da API Lu Estilo.',
+          caption: 'Domínios de catálogo, clientes e pedidos',
+        },
       ],
-
+      stack: [
+        'Python', 'FastAPI', 'SQLAlchemy', 'Alembic',
+        'Docker', 'Pytest', 'Sentry', 'JWT', 'REST API',
+      ],
       featured: true,
       challenge:
-        'Construir uma API organizada e segura para centralizar operações comerciais, garantindo consistência entre clientes, produtos, estoque e pedidos.',
+        'Manter consistentes as relações entre clientes, produtos, disponibilidade e pedidos, evitando que a API se torne apenas um conjunto de operações CRUD desconectadas.',
       solution:
-        'Estruturação de uma API RESTful com FastAPI, modelos de dados utilizando SQLAlchemy, versionamento de banco de dados com Alembic e autenticação baseada em tokens JWT. A solução contempla regras de negócio para o gerenciamento comercial e integração com serviços externos.',
+        'Estruturar modelos e serviços por responsabilidade, documentar contratos REST, versionar o esquema de dados e separar autenticação, autorização e regras do ciclo de pedidos.',
       engineeringDecisions: [
-        'Implementação de autenticação JWT com suporte a access token e refresh token.',
-        'Aplicação de autorização baseada em papéis (RBAC), diferenciando administradores e usuários comuns.',
-        'Desenvolvimento de operações CRUD para gerenciamento de clientes.',
-        'Validação de CPF e organização do histórico de pedidos dos clientes.',
-        'Implementação de gerenciamento de produtos com controle de estoque, imagens e categorias.',
-        'Modelagem do ciclo de pedidos, incluindo criação, acompanhamento e entrega.',
-        'Integração com WhatsApp para comunicação e notificações relacionadas aos pedidos.',
-        'Utilização de SQLAlchemy para mapeamento objeto-relacional.',
-        'Versionamento de alterações do banco de dados utilizando Alembic.',
-        'Utilização de Pytest para testes automatizados e Sentry para monitoramento de erros.',
+        'FastAPI para exposição de contratos HTTP e validação da entrada de dados.',
+        'SQLAlchemy para mapeamento das entidades e Alembic para migrações rastreáveis.',
+        'JWT para autenticação, com distinção entre credenciais de acesso e renovação.',
+        'RBAC para diferenciar operações administrativas e ações de usuários comuns.',
+        'Separação de fluxos de pedido, controle de estoque e cadastro de clientes.',
+        'Pytest como ferramenta de verificação das regras e contratos da aplicação.',
+        'Sentry como ferramenta prevista no stack para observabilidade de falhas.',
+        'Integração com WhatsApp tratada como fronteira externa da aplicação.',
       ],
-
       features: [
-        'API RESTful',
-        'Autenticação JWT',
-        'Autorização RBAC',
-        'Gestão de clientes',
-        'Validação de CPF',
-        'Cadastro de produtos',
+        'API REST e contratos de entrada',
+        'Autenticação JWT e RBAC',
+        'Cadastro de clientes e validação de CPF',
+        'Catálogo, categorias e imagens de produtos',
         'Controle de estoque',
-        'Gestão de pedidos',
+        'Criação e acompanhamento de pedidos',
         'Histórico de pedidos',
-        'Integração WhatsApp',
-        'Testes automatizados',
-        'Monitoramento de erros',
+        'Mensagens e notificações via WhatsApp (em evolução)',
       ],
-
       accent: 'lime',
     },
 
-    // --------------------------------------------------------
-    // 05 — GESTÃO DE ALMOXARIFADO
-    // --------------------------------------------------------
-
+    // 05 — ALMOXARIFADO: rastreabilidade institucional.
     {
       slug: 'gestao-almoxarifado',
-      eyebrow: '05 / Gestão Institucional · Controle de Estoque',
-      title:
-        'Sistema de Gestão de Almoxarifado — Defensoria Pública de Rondônia',
+      eyebrow: '05 / Sistemas internos · Rastreabilidade de estoque',
+      title: 'Gestão de Almoxarifado — Materiais e movimentações institucionais',
       shortTitle: 'Gestão de Almoxarifado',
       summary:
-        'Sistema institucional para gerenciamento de materiais, controle de estoque, movimentações e relatórios de almoxarifado.',
+        'Sistema em desenvolvimento para organizar inventário, entradas, saídas e histórico de materiais em ambiente institucional.',
       description:
-        'Desenvolvimento de uma solução para gerenciamento de materiais e equipamentos em almoxarifado, com foco no controle de inventário e na organização das operações de entrada, saída e acompanhamento de estoque.',
-      category: 'Sistemas de gestão',
+        'A proposta concentra os registros de materiais e movimentações em um fluxo rastreável. O sistema considera cadastro por categorias, atualização de saldos, consulta do histórico e informações de apoio à gestão. O frontend utiliza Next.js e React; o backend é estruturado com Django e PostgreSQL.',
+      category: 'Sistemas institucionais',
       status: 'Em desenvolvimento',
       year: '2025–2026',
       thumbnail: '/projects/almoxarifado.png',
       thumbnailAlt:
-        'Painel ilustrativo de controle de almoxarifado, com indicadores de estoque, materiais e movimentações.',
-      gallery: [{ src: '/projects/almoxarifado.png', alt: 'Painel ilustrativo de controle de almoxarifado, com indicadores de estoque, materiais e movimentações.', caption: 'Visão geral do projeto' }],
-      // links: { website: 'https://...', repository: 'https://github.com/...' },
+        'Painel de controle de materiais, saldos e movimentações de almoxarifado.',
+      gallery: [
+        {
+          src: '/projects/almoxarifado.png',
+          alt: 'Interface de acompanhamento de materiais e estoque.',
+          caption: 'Painel de inventário e movimentações',
+        },
+      ],
       stack: [
-        'Next.js',
-        'React',
-        'TypeScript',
-        'Material UI',
-        'Zod',
-        'Django',
-        'PostgreSQL',
-        'REST API',
+        'Next.js', 'React', 'TypeScript', 'Material UI',
+        'Zod', 'Django', 'PostgreSQL', 'REST API',
       ],
-
       featured: true,
-
       challenge:
-        'Organizar o cadastro e a movimentação de materiais institucionais, garantindo rastreabilidade, controle de estoque e acesso adequado às informações.',
+        'Oferecer rastreabilidade sobre o que foi cadastrado, recebido e retirado, com informações consistentes para consulta e prestação de contas.',
       solution:
-        'Desenvolvimento de funcionalidades para cadastro de materiais, acompanhamento de quantidades disponíveis, registro de movimentações de entrada e saída e consulta de informações para apoio à gestão.',
+        'Modelar materiais, categorias e eventos de movimentação, com interfaces próprias para cadastro, consulta e acompanhamento de saldos, observando regras de acesso e validação de dados.',
       engineeringDecisions: [
-        'Modelagem de entidades para materiais, categorias, estoques e movimentações.',
-        'Estruturação do banco de dados PostgreSQL para armazenamento das informações.',
-        'Implementação de autenticação e autorização conforme diferentes níveis de acesso.',
-        'Desenvolvimento de APIs para comunicação entre frontend e backend.',
-        'Utilização de TypeScript para tipagem das informações e integração com os serviços.',
-        'Construção de interfaces utilizando Next.js, React e Material UI.',
-        'Aplicação de validações para reduzir inconsistências no cadastro e movimentação de materiais.',
-        'Organização de consultas e relatórios para acompanhamento do estoque.',
+        'Separação entre cadastro de materiais e registros de movimentação.',
+        'PostgreSQL para persistência relacional de entidades e histórico operacional.',
+        'Django para regras de negócio e exposição de serviços REST.',
+        'Next.js e TypeScript para interfaces tipadas e manutenção dos formulários.',
+        'Validações de entrada para reduzir inconsistências de quantidades e cadastros.',
+        'Consideração de perfis de acesso para operações que alteram o estoque.',
+        'Organização de consultas e relatórios para acompanhar entradas e saídas.',
       ],
-
       features: [
-        'Cadastro de materiais',
-        'Categorias de produtos',
-        'Controle de estoque',
-        'Registro de entradas',
-        'Registro de saídas',
+        'Cadastro e categorização de materiais',
+        'Registro de entradas e saídas',
+        'Consulta de saldos e disponibilidade',
         'Histórico de movimentações',
         'Controle de acesso',
-        'Relatórios gerenciais',
+        'Relatórios de apoio à gestão',
       ],
-
       accent: 'blue',
     },
 
-    // --------------------------------------------------------
-    // 06 — SISTEMA TRIBO
-    // --------------------------------------------------------
-
+    // 06 — TRIBO: comunicação em tempo real.
     {
       slug: 'tribo',
-      eyebrow: '06 / Comunicação · Tempo Real',
-      title:
-        'Tribo — Sistema de Conversas Instantâneas',
-      shortTitle: 'Sistema Tribo',
+      eyebrow: '06 / Tempo real · Comunicação orientada a eventos',
+      title: 'Tribo — Aplicação de conversas em tempo real com Socket.IO',
+      shortTitle: 'Tribo',
       summary:
-        'Plataforma de comunicação em tempo real com salas de conversa, mensagens instantâneas, participantes e notificações.',
+        'Aplicação de mensagens instantâneas construída para explorar comunicação bidirecional, eventos, salas e sincronização da interface.',
       description:
-        'Desenvolvimento de uma aplicação para comunicação instantânea, utilizando tecnologias web e comunicação bidirecional. O sistema organiza usuários e participantes em salas de conversa, permitindo a troca de mensagens e a integração com recursos de notificação.',
-      category: 'Plataformas',
+        'O Tribo explora o ciclo de comunicação entre clientes React e um servidor Node.js por meio do Socket.IO. A aplicação organiza participantes em salas de conversa e trata eventos de mensagens e notificações, oferecendo um estudo aplicado dos desafios de estado e atualização em tempo real.',
+      category: 'Comunicação em tempo real',
       status: 'Concluído',
       year: '2025',
       thumbnail: '/projects/tribo.png',
       thumbnailAlt:
-        'Representação de uma plataforma de mensagens instantâneas, com salas de conversa e notificações em tempo real.',
-
-      gallery: [{ src: '/projects/tribo.png', alt: 'Representação de uma plataforma de mensagens instantâneas, com salas de conversa e notificações em tempo real.', caption: 'Visão geral do projeto' }],
-      // links: { website: 'https://...', repository: 'https://github.com/...' },
-      stack: [
-        'Node.js',
-        'React',
-        'TypeScript',
-        'Socket.IO',
-        'socket.io-client',
+        'Representação de salas de conversa e mensagens na aplicação Tribo.',
+      gallery: [
+        {
+          src: '/projects/tribo.png',
+          alt: 'Interface do sistema Tribo com conversas e participantes.',
+          caption: 'Salas e mensagens em tempo real',
+        },
       ],
-
+      stack: [
+        'Node.js', 'React', 'TypeScript',
+        'Socket.IO', 'socket.io-client',
+      ],
       featured: true,
       challenge:
-        'Desenvolver uma solução de comunicação instantânea capaz de organizar diferentes usuários e salas, mantendo consistência no fluxo de mensagens e gerenciamento de participantes.',
+        'Manter a interface sincronizada com os eventos do servidor enquanto usuários participam de diferentes salas e interagem em tempo real.',
       solution:
-        'Implementação de comunicação em tempo real utilizando Socket.IO, com estruturação de salas, gerenciamento de participantes, eventos de mensagens e integração entre frontend e backend.',
-
+        'Definir eventos de comunicação e responsabilidades entre cliente e servidor, com organização de salas, gerenciamento de participantes e atualização dos estados de conversa.',
       engineeringDecisions: [
-        'Utilização de Socket.IO para comunicação bidirecional entre cliente e servidor.',
-        'Organização de salas de conversa e participantes.',
-        'Modelagem das entidades relacionadas às conversas e mensagens.',
-        'Estruturação de mecanismos de persistência e recuperação de mensagens.',
-        'Gerenciamento de permissões e participação em salas de conversa.',
-        'Integração entre React e Node.js para atualização das interfaces em tempo real.',
-        'Organização de eventos para comunicação, notificações e atualizações.',
+        'Socket.IO para comunicação bidirecional baseada em eventos.',
+        'Separação entre os eventos do servidor e a apresentação no React.',
+        'Modelagem de salas, participantes e mensagens como conceitos distintos.',
+        'Sincronização do estado da interface com os eventos recebidos.',
+        'Organização de notificações e atualização de conversas por contexto.',
+        'Consideração de persistência e recuperação para o histórico de mensagens.',
       ],
-
       features: [
         'Mensagens instantâneas',
-        'Comunicação em tempo real',
         'Salas de conversa',
-        'Gerenciamento de usuários',
-        'Participantes por sala',
+        'Gerenciamento de participantes',
+        'Atualizações em tempo real',
         'Histórico de mensagens',
         'Notificações',
-        'Integração frontend e backend',
       ],
-
       accent: 'violet',
     },
 
-    // --------------------------------------------------------
-    // 03 — Any Banck
-    // --------------------------------------------------------
-
+    // 07 — ANYBANK: estudo de autenticação e dados financeiros.
     {
       slug: 'anybanck',
-      eyebrow: '03 / Site simulação de organização de finanças',
-      title:
-        'Gestor de finanças pessoais',
-      shortTitle: 'Gestor de finanças pessoais',
+      eyebrow: '07 / Projeto de estudo · Next.js e Supabase',
+      title: 'AnyBank — Experimento de organização financeira com Supabase',
+      shortTitle: 'AnyBank',
       summary:
-        'Ambiente de simulação de gestão da vida financeira pessoal. ',
+        'Projeto educacional de finanças pessoais com foco na integração entre interface React, acesso autenticado e persistência de dados com Supabase.',
       description:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase',
-      category: 'Sistemas de gestão',
+        'Desenvolvido como exercício prático a partir de conteúdos da Alura, o AnyBank permite explorar a construção de uma aplicação web com autenticação, navegação e dados financeiros. O foco do estudo é compreender o fluxo entre frontend Next.js, sessões de usuário e serviços do Supabase, sem apresentar o projeto como produto bancário real.',
+      category: 'Projetos de estudo',
       status: 'Em desenvolvimento',
       year: '2025',
       thumbnail: '/projects/anybanck.png',
       thumbnailAlt:
-        'Representação de uma tela de login do sistema de organização financeira [!Supabase poderá está invelido no momento que for verificar o app]',
-      gallery: [{ src: '/projects/anybanck.png', alt: 'Representaão de uma tela de login do sistema de organização financeira' }],
-      links: { website: 'https://anybank-main.vercel.app/auth/login', repository: 'https://anybank-main.vercel.app/auth/login' },
-      stack: [
-        'Supabase',
-        'Next.js',
-        'React',
-        'JavaScript',
-        'Modelagem de dados',
+        'Tela de login do projeto educacional AnyBank.',
+      gallery: [
+        {
+          src: '/projects/anybanck.png',
+          alt: 'Página de autenticação da aplicação financeira AnyBank.',
+          caption: 'Experiência de autenticação do usuário',
+        },
       ],
-      featured: true,
+      links: {
+        website: 'https://anybank-main.vercel.app/auth/login',
+      },
+      stack: [
+        'Supabase', 'Next.js', 'React', 'JavaScript', 'Modelagem de dados',
+      ],
+      featured: false,
       challenge:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+        'Integrar autenticação e dados de uma aplicação financeira de estudo sem concentrar toda a lógica nos componentes de interface.',
       solution:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+        'Explorar organização de telas e fluxos de acesso em React, utilizando o Supabase como serviço externo para autenticação e persistência e documentando as responsabilidades de cada camada.',
       engineeringDecisions: [
-        'Estruturação de conteúdo por categorias, áreas e funcionalidades.',
-        'Separação entre apresentação de informações e gerenciamento de conteúdo.',
-        'Utilização de WordPress como alternativa para administração de conteúdos institucionais.',
-        'Avaliação da integração GraphQL para disponibilização estruturada de informações.',
-        'Organização de componentes reutilizáveis para navegação e visualização de recursos.',
-        'Planejamento de mecanismos de controle de acesso para conteúdos internos.',
+        'Next.js e React para estruturação de páginas e componentes.',
+        'Supabase como serviço gerenciado para dados e autenticação no contexto do estudo.',
+        'Separação entre apresentação, lógica de acesso e comunicação com o backend.',
+        'Modelagem das informações financeiras relevantes para o exercício.',
+        'Tratamento de estados de carregamento, erro e acesso às telas como preocupação de interface.',
       ],
       features: [
-        'Portal Login',
-        'Graficos atualizados',
-        'Organização financeira',
-        'Organização de ferramentas',
-        'Gerenciamento de conteúdo',
+        'Tela de autenticação',
+        'Fluxo de acesso do usuário',
+        'Organização financeira pessoal',
         'Integração com Supabase',
+        'Exercício de modelagem de dados',
       ],
-
       accent: 'yellow',
     },
 
-    
-    // --------------------------------------------------------
-    // 03 — Gran Zen
-    // --------------------------------------------------------
-
+    // 08 — GRANAZEN: lançamentos e visualização financeira.
     {
       slug: 'granzen',
-      eyebrow: '03 / Site simulação de organização de finanças',
-      title:
-        'Gestor de finanças pessoais',
-      shortTitle: 'Gestor de finanças pessoais',
+      eyebrow: '08 / Projeto de estudo · Lançamentos e visualização de dados',
+      title: 'GranaZen — Experimento de controle e visualização financeira',
+      shortTitle: 'GranaZen',
       summary:
-        'Ambiente de simulação de gestão da vida financeira pessoal. ',
+        'Aplicação educacional de finanças pessoais voltada ao registro de movimentações e à apresentação visual de informações financeiras.',
       description:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase',
-      category: 'Sistemas de gestão',
+        'Projeto de aprendizagem com interface para acompanhar a vida financeira e registrar itens de movimentação, conforme ilustrado nas telas do portfólio. O exercício explora a organização dos dados, a experiência de inclusão de registros e sua representação visual, utilizando React, Next.js e Supabase conforme o stack informado no projeto.',
+      category: 'Projetos de estudo',
       status: 'Em desenvolvimento',
       year: '2025',
       thumbnail: '/projects/granzen.png',
       thumbnailAlt:
-        'Representação de uma tela de login do sistema de organização financeira [!Supabase poderá está invelido no momento que for verificar o app]',
+        'Painel inicial da aplicação educacional de finanças GranaZen.',
       gallery: [
         {
-         src: '/projects/granzen.png', 
-         alt: 'Representação de uma tela inicial do sistema de organização financeira' 
-        }, {
-         src: '/projects/granzen1.png', 
-         alt: 'Representação adicionando  itens no sistema de organização financeira' 
+          src: '/projects/granzen.png',
+          alt: 'Tela inicial do projeto GranaZen com visão de informações financeiras.',
+          caption: 'Visão geral das finanças pessoais',
+        },
+        {
+          src: '/projects/granzen1.png',
+          alt: 'Interface de inclusão de um registro financeiro no GranaZen.',
+          caption: 'Fluxo de cadastro de movimentações',
         },
       ],
-      links: { website: 'https://grana-zen-main.vercel.app/index.html', repository: 'https://grana-zen-main.vercel.app/index.html' },
+      links: {
+        website: 'https://grana-zen-main.vercel.app/index.html',
+      },
       stack: [
-        'Supabase',
-        'Next.js',
-        'React',
-        'JavaScript',
-        'Modelagem de dados',
+        'Supabase', 'Next.js', 'React', 'JavaScript', 'Modelagem de dados',
       ],
-      featured: true,
+      featured: false,
       challenge:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+        'Transformar lançamentos isolados em informações compreensíveis, com uma navegação simples para registrar e consultar movimentações.',
       solution:
-        'Projeto de Aprendisagem do curso da Alura para aplicação de boas praticas de desenvolvimento e implementação do supabase.',
+        'Organizar a interação entre formulário, dados persistidos e visualização, distinguindo o cadastro das movimentações da apresentação dos resultados.',
       engineeringDecisions: [
-        'Estruturação de conteúdo por categorias, áreas e funcionalidades.',
-        'Separação entre apresentação de informações e gerenciamento de conteúdo.',
-        'Utilização de WordPress como alternativa para administração de conteúdos institucionais.',
-        'Avaliação da integração GraphQL para disponibilização estruturada de informações.',
-        'Organização de componentes reutilizáveis para navegação e visualização de recursos.',
-        'Planejamento de mecanismos de controle de acesso para conteúdos internos.',
+        'Organização dos dados financeiros em registros consultáveis.',
+        'Componentes voltados a entrada, listagem e apresentação das informações.',
+        'Separação entre fluxo de cadastro e indicadores exibidos na interface.',
+        'Integração com Supabase como exercício de persistência em serviço gerenciado.',
+        'Tratamento do feedback visual após ações de inclusão de dados.',
       ],
       features: [
-        'Portal Login',
-        'Graficos atualizados',
-        'Organização financeira',
-        'Organização de ferramentas',
-        'Gerenciamento de conteúdo',
+        'Visão geral das informações financeiras',
+        'Inclusão de registros de movimentação',
+        'Listagem e acompanhamento de lançamentos',
+        'Visualização de gráficos e indicadores',
         'Integração com Supabase',
       ],
-
       accent: 'lime',
     },
-
   ],
 
-  // ==========================================================
-  // EXPERIÊNCIA PROFISSIONAL
-  // ==========================================================
-
   experiences: [
-    // --------------------------------------------------------
-    // ESTÁGIO DE PÓS-GRADUAÇÃO
-    // --------------------------------------------------------
-
     {
       id: 'dpe-ro-pos-graduacao',
-      role:
-        'Desenvolvimento de Software e Inteligência Artificial · Estágio de Pós-graduação',
-      organization:
-        'Defensoria Pública do Estado de Rondônia',
+      role: 'Desenvolvimento de Software e Inteligência Artificial · Estágio de Pós-graduação',
+      organization: 'Defensoria Pública do Estado de Rondônia',
       period: 'Jan 2026 — Atual',
       location: 'Porto Velho · RO',
       description:
-        'Atuação em desenvolvimento e manutenção de soluções digitais institucionais, envolvendo interfaces web, APIs, integração entre sistemas e aplicações de engenharia de software.',
+        'Atuação no desenvolvimento e na evolução de aplicações digitais institucionais, aproximando necessidades das áreas usuárias, interfaces web e serviços de backend.',
       highlights: [
-        'Desenvolvimento e manutenção de aplicações web institucionais.',
-        'Construção e integração de interfaces com serviços de backend.',
-        'Participação na implementação de funcionalidades e regras de negócio.',
-        'Organização e evolução de componentes reutilizáveis.',
-        'Aplicação de boas práticas de desenvolvimento, manutenção e versionamento de código.',
+        'Desenvolvimento e manutenção de funcionalidades web com atenção à legibilidade e à reutilização de componentes.',
+        'Integração entre interfaces, APIs e regras de negócio de sistemas institucionais.',
+        'Organização de código e apoio à evolução de aplicações existentes.',
+        'Aplicação de versionamento e práticas de manutenção em ambiente colaborativo.',
       ],
-
-      technologies: [
-        'Python',
-        'Django',
-        'Next.js',
-        'React',
-        'TypeScript',
-        'Git',
-      ],
+      technologies: ['Python', 'Django', 'Next.js', 'React', 'TypeScript', 'Git'],
     },
-
-    // --------------------------------------------------------
-    // ESTÁGIO DE GRADUAÇÃO
-    // --------------------------------------------------------
-
     {
       id: 'dpe-ro-graduacao',
-      role:
-        'Desenvolvimento de Software · Estágio de Graduação',
-      organization:
-        'Defensoria Pública do Estado de Rondônia',
+      role: 'Desenvolvimento de Software · Estágio de Graduação',
+      organization: 'Defensoria Pública do Estado de Rondônia',
       period: 'Jun 2024 — Dez 2025',
       location: 'Porto Velho · RO',
       description:
-        'Experiência em desenvolvimento e manutenção de soluções digitais, contribuindo para interfaces, formulários, serviços e sistemas utilizados em processos institucionais.',
+        'Experiência prática no desenvolvimento de interfaces, formulários e integrações para soluções digitais de uso institucional.',
       highlights: [
-        'Desenvolvimento de interfaces e funcionalidades web.',
-        'Manutenção evolutiva de sistemas institucionais.',
-        'Integração de interfaces com APIs e serviços.',
-        'Desenvolvimento e aprimoramento de formulários digitais.',
-        'Utilização de controle de versão e organização de código.',
+        'Implementação de interfaces e funcionalidades voltadas a demandas internas e atendimento digital.',
+        'Manutenção corretiva e evolutiva de sistemas e componentes web.',
+        'Integração de páginas e formulários com APIs e serviços existentes.',
+        'Participação na organização das entregas e no controle de versão do código.',
       ],
-
-      technologies: [
-        'Python',
-        'Django',
-        'Next.js',
-        'React',
-        'JavaScript',
-        'Git',
-      ],
+      technologies: ['Python', 'Django', 'Next.js', 'React', 'JavaScript', 'Git'],
     },
-
-    // --------------------------------------------------------
-    // ATENDIMENTO E SUPORTE
-    // --------------------------------------------------------
-
     {
       id: 'provider-energisa',
-      role: 'Atendimento e Suporte técnico',
+      role: 'Atendimento e Suporte Técnico',
       organization: 'Grupo Provider / Energisa',
       period: 'Jun 2023 — Mai 2024',
-      location: 'Ariquemes/RO · Brasil',
+      location: 'Ariquemes · RO',
       description:
-        'Atuação em atendimento e suporte, com foco em comunicação, investigação de problemas, orientação de usuários, resolução de demandas operacionais e treinamento de equipes em outras cidades de Rondônia no uso dos sistemas internos.',
+        'Atendimento operacional e suporte a usuários, com investigação de ocorrências, orientação sobre sistemas internos e capacitação de equipes em unidades de Rondônia.',
       highlights: [
-        '· Análise e Otimização: Análise de négocios para identificação de oportunidades de melhoria em processos críticos de atendimento.',
-        '· Treinamento Técnico Institucional: Capacitação de colaboradores e times locais em multiplas regionais de Rondônia para a utilização eficiente dos sistemas isnternos e ferramentas de gestão da companhoia.',
-        '· Colaborador Destaque(Regional Ariquemes): Reconhecimento pela consistência de performace com as melhores entregas consecutivas e por atingir o maior indice de digitalização de processo da regional.',
+        'Análise de processos de atendimento para identificar oportunidades de melhoria operacional.',
+        'Capacitação de colaboradores de diferentes regionais no uso de sistemas e ferramentas internas.',
+        'Reconhecimento como colaborador destaque na regional de Ariquemes, conforme histórico profissional informado.',
       ],
     },
-
-    // --------------------------------------------------------
-    // INSTRUTOR DE INFORMÁTICA
-    // --------------------------------------------------------
-
     {
       id: 'max-informatica',
       role: 'Instrutor de Informática',
       organization: 'R.T.L.N Centro Integrado Max Informática',
       period: 'Mar 2023 — Mai 2024',
-      location: 'Jaru/RO · Brasil',
-
+      location: 'Jaru · RO',
       description:
-        'Atuação como instrutor de informática, ministrando aulas e treinamentos para alunos de diferentes níveis de conhecimento e faixas etárias.',
+        'Ensino de informática para públicos com diferentes níveis de familiaridade tecnológica, incluindo atividades práticas, avaliação e suporte ao ambiente de aprendizagem.',
       highlights: [
-        '· Gestão de Aprendizagem: Responsável pela isntrução técnica em informática, aplicação metodologias de ensino para capacitação de novos profissionais.',
-        '· Avaliação de Desempenho: Elaboração e aplicação de exames técnicos,  dinâmicas de grupo e projetos acadêmicos para mensurar a evolução técnica dos alunos.',
-        '· Gestão Administrativa e Documental: Coordenação da emissão de certificados e suporteem rotinas administrativas do centro profissionalizante, garantindo conformidade com as normas educacionais e regulatórias.',
-        '· Manutenção de Infraestrutura: Supervisão e manutenção de equipamentos de informática, garantindo a funcionalidade e segurança dos recursos tecnológicos utilizados no processo de ensino-aprendizagem.',
-        '· Lideraça e Comunicação:Desenvolvimento de habilidades  soft skill essenciais através  da mediação de conflitos em sala de aula e apresentações técnicas, promovendo um ambiente de aprendizado colaborativo e eficaz.',
+        'Planejamento e condução de aulas, atividades práticas e avaliações de aprendizagem.',
+        'Orientação individual e mediação de dúvidas para apoiar o progresso dos alunos.',
+        'Apoio a processos administrativos e à emissão de certificados.',
+        'Manutenção e suporte aos equipamentos utilizados nas atividades educacionais.',
       ],
-
       technologies: [
-        'Microsoft Office',
-        'Windows',
-        'Linux',
-        'Google Workspace',
-        'Ferramentas de apresentação',
-        'Plataformas educacionais',
+        'Microsoft Office', 'Windows', 'Linux', 'Google Workspace',
+        'Ferramentas de apresentação', 'Plataformas educacionais',
       ],
     },
   ],
-
-  // ==========================================================
-  // FORMAÇÃO ACADÊMICA
-  // ==========================================================
 
   education: [
     {
@@ -899,42 +677,39 @@ export const portfolioData: PortfolioWithCourses = {
       type: 'Graduação',
       status: 'Concluída',
       date_inicio_fim: '02/02/2021 - 15/12/2025',
-      totalHours: '4000',
+      totalHours: '4.000 horas',
       certificateImage: '/courses/25-graducao.png',
-      certificateUrl: ''
+      certificateUrl: '',
     },
-
     {
       title: 'Inteligência Artificial e Machine Learning',
       type: 'Pós-graduação lato sensu',
       status: 'Concluída',
       date_inicio_fim: '17/12/2025 - 30/10/2026',
-      totalHours: '400',
+      totalHours: '400 horas',
       certificateImage: '/courses/24-POS.png',
-      certificateUrl: 'validador.vitru.com.br'
+      certificateUrl: 'validador.vitru.com.br',
     },
   ],
 
-  // ==========================================================
-  // CURSOS LIVRES E CERTIFICADOS
-  // ==========================================================
-
+  // Cursos e certificados: preservados do cadastro original; títulos revisados.
+  // Certificados com URL não confiável ficam sem link até validação.
   freeCourses: [
-{
+    {
       id: '00-fm2s',
       title: 'INTELIGÊNCIA ARTIFICIAL GENERATIVA',
       date: '04/05/2026',
       totalHours: 16,
       certificateImage: '/courses/fm2s-inteligencia.png',
-      certificateUrl: 'https://ead.fm2s.com.br/verify/175fd51da258f096ebdb053e4ebc1e713515f9ca'
+      certificateUrl: 'https://ead.fm2s.com.br/verify/175fd51da258f096ebdb053e4ebc1e713515f9ca',
     },
     {
       id: '000-fm2s',
-      title: 'MÉTODOLOGIA ÁGEIS NA PRÁTICA',
+      title: 'METODOLOGIAS ÁGEIS NA PRÁTICA',
       date: '10/04/2026',
       totalHours: 12,
       certificateImage: '/courses/fm2s-inteligencia.png',
-      certificateUrl: 'https://ead.fm2s.com.br/verify/4d03c558e7ab24fd99fae7a8579931891fbe9179'
+      certificateUrl: 'https://ead.fm2s.com.br/verify/4d03c558e7ab24fd99fae7a8579931891fbe9179',
     },
     {
       id: '01-T-I-E-C-E-P-D',
@@ -942,7 +717,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/11/2026',
       totalHours: 40,
       certificateImage: '/courses/01-T-I-E-C-E-P-D.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '02-P-P-M-L.png',
@@ -950,15 +725,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/02-P-P-M-L.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
-    },
-    {
-      id: '02-P-P-M-L.png',
-      title: 'PROGRAMAÇÃO EM PYTHON PARA MACHINE LEARNING',
-      date: '11/09/2026',
-      totalHours: 40,
-      certificateImage: '/courses/02-P-P-M-L.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '10-A-R-N-A.png',
@@ -966,24 +733,23 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/10-A-R-N-A.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
-
     {
       id: '04-INDI.png',
-      title: 'INTRODUÇÃO A NEGÓCIOS DITAIS E INOVAÇÃO',
+      title: 'INTRODUÇÃO A NEGÓCIOS DIGITAIS E INOVAÇÃO',
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/04-I-N-D-I.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '05-I-A-S-I.png',
-      title: 'INTELIGêNCIA ARTIFICIAL E SISTEMAS INTELIGENTES',
+      title: 'INTELIGÊNCIA ARTIFICIAL E SISTEMAS INTELIGENTES',
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/05-I-A-S-I.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '06-F-T-M-L.png',
@@ -991,7 +757,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/06-F-T-M-L.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '07-F-A-P-I.png',
@@ -999,7 +765,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/07-F-A-P-I.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '08-B-D-A-T-D.png',
@@ -1007,15 +773,15 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/08-B-D-A-T-D.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '03-P.png',
-      title: 'POTIFÓLIO',
+      title: 'PORTFÓLIO',
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/03-P.png',
-      certificateUrl: 'http://www.unicesumar.edu.br/documentos'
+      certificateUrl: 'http://www.unicesumar.edu.br/documentos',
     },
     {
       id: '09-A-V-I-C.png',
@@ -1023,7 +789,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '11/09/2026',
       totalHours: 40,
       certificateImage: '/courses/09-A-V-I-C.png',
-      certificateUrl: 'http://www.unicesumar.AGEN.br/documentos'
+      certificateUrl: '',
     },
     {
       id: '11-alura-postgres.png',
@@ -1031,7 +797,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '12/05/2026',
       totalHours: 8,
       certificateImage: '/courses/11-alura-postgres.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714',
     },
     {
       id: '12-alura-PostgreSQL-views.png',
@@ -1039,7 +805,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '12/05/2026',
       totalHours: 8,
       certificateImage: '/courses/12-alura-PostgreSQL-views.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/74ccbdf7-c7cf-4670-8d02-a843fa6f1714'
+      certificateUrl: '',
     },
     {
       id: '13-alura-postgrees.png',
@@ -1047,7 +813,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '17/05/2026',
       totalHours: 8,
       certificateImage: '/courses/13-alura-postgrees.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/a8c4d221-a8c7-48f0-971e-6ebb6e85e911'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a8c4d221-a8c7-48f0-971e-6ebb6e85e911',
     },
     {
       id: '14-alura-Python-criar.png',
@@ -1055,7 +821,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '04/08/2024',
       totalHours: 8,
       certificateImage: '/courses/14-alura-Python-criar.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/7fca7700-573c-49dd-95bc-149f2d5a4f87'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/7fca7700-573c-49dd-95bc-149f2d5a4f87',
     },
     {
       id: '15-React-implementando-arquitetura-event-driven-Socket-io.png',
@@ -1063,7 +829,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '20/04/2026',
       totalHours: 8,
       certificateImage: '/courses/15-React-implementando-arquitetura-event-driven-Socket-io.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/27ac4d7d-88b8-49e3-a708-5b2a2ff09c6c'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/27ac4d7d-88b8-49e3-a708-5b2a2ff09c6c',
     },
     {
       id: '16-SOLID-aplicado-ao-React.png',
@@ -1071,7 +837,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '09/04/2025',
       totalHours: 8,
       certificateImage: '/courses/16-SOLID-aplicado-ao-React.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/a3054c47-1342-4710-9beb-5d04f29c5ade'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a3054c47-1342-4710-9beb-5d04f29c5ade',
     },
     {
       id: '22-REACT-NEST.png',
@@ -1079,7 +845,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '15/04/2025',
       totalHours: 8,
       certificateImage: '/courses/22-REACT-NEST.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/87fb978f-7326-4b5b-9d36-0d031bbb4c75'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/87fb978f-7326-4b5b-9d36-0d031bbb4c75',
     },
     {
       id: '23-REACT-ARQUITETURA.png',
@@ -1087,7 +853,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '15/04/2025',
       totalHours: 8,
       certificateImage: '/courses/23-REACT-ARQUITETURA.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/249d0965-5e87-4113-8c79-2fa1a30b155b'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/249d0965-5e87-4113-8c79-2fa1a30b155b',
     },
     {
       id: '17-API-com-Django3-Validacoes-buscas-filtros-e-deploy.png',
@@ -1095,15 +861,15 @@ export const portfolioData: PortfolioWithCourses = {
       date: '22/07/2024',
       totalHours: 8,
       certificateImage: '/courses/17-API-com-Django3-Validacoes-buscas-filtros-e-deploy.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/28d48af2-5f59-4a1d-995e-eac098a8532f'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/28d48af2-5f59-4a1d-995e-eac098a8532f',
     },
     {
       id: '18-API-com-Django3-Django-Rest-Framework.png',
-      title: 'API COM DJANGO 3: DJANGO REACT FRAMEWORK',
+      title: 'API COM DJANGO 3: DJANGO REST FRAMEWORK',
       date: '18/07/2024',
       totalHours: 8,
       certificateImage: '/courses/18-API-com-Django3-Django-Rest-Framework.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/f72e48d3-1896-473c-b4e9-e8e81462bc3e'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/f72e48d3-1896-473c-b4e9-e8e81462bc3e',
     },
     {
       id: '19-Comecando-em-Programacao-carreira-e-primeiros-passos.png',
@@ -1111,7 +877,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '28/01/2025',
       totalHours: 8,
       certificateImage: '/courses/19-Comecando-em-Programacao-carreira-e-primeiros-passos.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/a9c7d2a3-0b3f-4a69-8ca8-ccb9d235a3e5'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/a9c7d2a3-0b3f-4a69-8ca8-ccb9d235a3e5',
     },
     {
       id: '20-React-comece-seu-projeto-full-stack.png',
@@ -1119,7 +885,7 @@ export const portfolioData: PortfolioWithCourses = {
       date: '03/07/2024',
       totalHours: 12,
       certificateImage: '/courses/20-React-comece-seu-projeto-full-stack.png',
-      certificateUrl: 'https://cursos.alura.com.br/certificate/f14a55de-903e-4e75-91be-735217540aaa'
+      certificateUrl: 'https://cursos.alura.com.br/certificate/f14a55de-903e-4e75-91be-735217540aaa',
     },
     {
       id: '21-conclusoes.png',
@@ -1127,124 +893,56 @@ export const portfolioData: PortfolioWithCourses = {
       date: '01/07/2024 - 12/05/2026',
       totalHours: 91,
       certificateImage: '/courses/21-conclusoes.png',
-      certificateUrl: 'https://cursos.alura.com.br/user/andersonengsoft/fullCertificate/908ac35092f96a2944b45e1561d2f27d'
+      certificateUrl: 'https://cursos.alura.com.br/user/andersonengsoft/fullCertificate/908ac35092f96a2944b45e1561d2f27d',
     },
   ],
 
-  // ==========================================================
-  // HABILIDADES TÉCNICAS
-  // ==========================================================
-
   skillGroups: [
-    // --------------------------------------------------------
-    // FRONTEND
-    // --------------------------------------------------------
-
     {
       id: 'frontend',
-
-      label: 'Frontend & UX',
-
+      label: 'Frontend & Experiência do Usuário',
       description:
-        'Desenvolvimento de interfaces responsivas, acessíveis e reutilizáveis, com foco em experiência do usuário, desempenho e manutenção.',
-
+        'Construção de interfaces responsivas e acessíveis, com atenção à consistência visual, tipagem das interações e reutilização de componentes.',
       skills: [
-        'React',
-        'Next.js',
-        'TypeScript',
-        'JavaScript',
-        'Material UI',
-        'HTML5',
-        'CSS3',
-        'Responsive Design',
-        'WordPress',
+        'React', 'Next.js', 'TypeScript', 'JavaScript', 'Material UI',
+        'HTML5', 'CSS3', 'Responsive Design', 'WordPress',
       ],
     },
-
-    // --------------------------------------------------------
-    // BACKEND E BANCO DE DADOS
-    // --------------------------------------------------------
-
     {
       id: 'backend',
-      label: 'Backend & Dados',
+      label: 'Backend & Persistência de Dados',
       description:
-        'Desenvolvimento de APIs, implementação de regras de negócio, autenticação, autorização, persistência de dados e integração de serviços.',
+        'Desenho e integração de APIs, regras de negócio, autenticação, autorização e persistência relacional, considerando manutenção e consistência operacional.',
       skills: [
-        'Python',
-        'Django',
-        'Django REST Framework',
-        'FastAPI',
-        'Node.js',
-        'PHP',
-        'PostgreSQL',
-        'Alembic',
-        'REST API',
-        'GraphQL',
-        'JWT',
-        'RBAC',
-        'ABAC',
-        'Socket.IO',
+        'Python', 'Django', 'Django REST Framework', 'FastAPI',
+        'Node.js', 'PHP', 'PostgreSQL', 'Alembic', 'REST API',
+        'GraphQL', 'JWT', 'RBAC', 'ABAC', 'Socket.IO',
       ],
     },
-
-    // --------------------------------------------------------
-    // ENGENHARIA E FERRAMENTAS
-    // --------------------------------------------------------
-
     {
       id: 'engineering',
-
-      label: 'Engenharia & Ferramentas',
-
+      label: 'Engenharia, Qualidade & Operações',
       description:
-        'Versionamento, automação de processos, testes, conteinerização, integração contínua, observabilidade e organização de ambientes de desenvolvimento.',
-
+        'Práticas de engenharia aplicadas a evolução de sistemas: versionamento, testes, automação, conteinerização, observabilidade e organização de ambientes.',
       skills: [
-        'Git',
-        'GitLab',
-        'Docker',
-        'CI/CD',
-        'Redis',
-        'Celery',
-        'Pytest',
-        'Sentry',
-        'n8n',
-        'Testes automatizados',
-        'Arquitetura modular',
-        'Modelagem de dados',
-        'Integração de sistemas',
+        'Git', 'GitLab', 'Docker', 'CI/CD', 'Redis', 'Celery',
+        'Pytest', 'Sentry', 'n8n', 'Testes automatizados',
+        'Arquitetura modular', 'Modelagem de dados', 'Integração de sistemas',
       ],
     },
-
-    // --------------------------------------------------------
-    // INTELIGÊNCIA ARTIFICIAL E AUTOMAÇÃO
-    // --------------------------------------------------------
-
     {
       id: 'ai',
-
-      label: 'IA & Automação',
-
+      label: 'Inteligência Artificial & Automação',
       description:
-        'Aplicação de inteligência artificial, integração de modelos de linguagem e desenvolvimento de automações com validação estruturada e controle de segurança.',
-
+        'Estudos e integrações de recursos de IA em aplicações, com ênfase em validação de dados, limites de responsabilidade e automação de fluxos.',
       skills: [
-        'Gemini API',
-        'Integração de LLMs',
-        'Machine Learning',
-        'Pydantic',
-        'Extração estruturada de dados',
-        'Automação de processos',
-        'Integração com APIs',
+        'Gemini API', 'Integração de LLMs', 'Machine Learning',
+        'Pydantic', 'Extração estruturada de dados',
+        'Automação de processos', 'Integração com APIs',
         'Validação de dados',
       ],
     },
   ],
 };
-
-// ============================================================
-// 3. EXPORTAÇÃO DOS TIPOS
-// ============================================================
 
 export type PortfolioContent = typeof portfolioData;
